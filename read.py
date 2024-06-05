@@ -2,8 +2,9 @@
 
 from numpy import array
 
-def read(file: str) -> list[int | str]:
+def read(file: str) -> tuple[list[int], list[str]]:
     data = []
+    metadata = []
     with open(file, 'r') as f:
         for line in f:
 
@@ -14,7 +15,8 @@ def read(file: str) -> list[int | str]:
             splits[0] = int(splits[0])
             splits[1] = int(splits[1])
 
-            # Adds the data to the arrau
-            data.append(array(splits))
+            # Adds the data to the arrays
+            data.append(array(splits[:2]))
+            metadata.append(array(splits[2:]))
 
-    return array(data)
+    return array(data), array(metadata)
