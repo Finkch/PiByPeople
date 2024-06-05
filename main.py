@@ -2,6 +2,7 @@
 # This is the main file. It get the ball rolling!
 
 from dataset import Dataset
+from show import print_pi
 
 def main():
     
@@ -9,9 +10,11 @@ def main():
 
     dataset = Dataset(f'data/{data_file}.csv')
 
-    print(dataset.live_random.pi)
-    print(dataset.semi_random.pi)
-    print(dataset.true_random.pi)
+
+
+    print_pi(dataset.live_random.pi)
+    print_pi(dataset.semi_random.pi)
+    print_pi(dataset.true_random.pi)
 
 
 # Ensures only the startup thread runs main
