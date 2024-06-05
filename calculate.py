@@ -1,6 +1,7 @@
 # Does some calculations
 
 from math import sqrt, gcd
+from sympy import isprime
 
 
 # Calculates pi.
@@ -26,26 +27,5 @@ def is_coprime(pair) -> 0 | 1:
 
 
 # Checks if a number is prime.
-#   Employs the "6k ±1" algorithm.
 def is_prime(n: int) -> 0 | 1:
-    
-    # One and zero are both non-prime
-    if n <= 1:
-        return 0
-    
-    # Two and three are prime
-    if n <= 3:
-        return 1
-    
-    # Checks divisible by two and by three
-    if n % 2 == 0 or n % 3 == 0:
-        return 0
-    
-    # Checks of the form 6k ± 1
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return 0
-        i += 6
-
-    return 1
+    return 1 if isprime(n) else 0
