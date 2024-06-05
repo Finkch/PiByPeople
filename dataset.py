@@ -26,17 +26,13 @@ class Dataset:
         self.acks        = [item[0] for item in self.metadata[:,2:]]
 
         # Gets the number of pairs
-        self.pairs       = len(self.live_random)
+        self.length      = len(self.live_random)
 
         # Generates other pairs of numbers
         self.generate_semi_random()
         self.generate_true_random()
 
-        # Count of pairs of coprime numbers
-        self.coprimes   = 0
 
-        # Count of prime numbers
-        self.primes     = 0
 
     # Generates a list of semi-random numbers from the
     # metadate of each entry
@@ -44,7 +40,7 @@ class Dataset:
 
         semi_random = []        
 
-        for i in range(self.pairs):
+        for i in range(self.length):
 
             # The first number is generated via the acknowledgement
             # It's the sum of ASCII values
@@ -76,7 +72,7 @@ class Dataset:
 
         # Calls random numbers to fill the array
         # true_random will have the same dimensions as live_random
-        self.true_random = PairList([(random(), random()) for i in range(self.pairs)])
+        self.true_random = PairList([(random(), random()) for i in range(self.length)])
 
 
 # A pair of numbers
@@ -106,7 +102,7 @@ class PairList:
         self.coprimes = self.count_coprimes()
         self.primes = self.count_primes()
 
-        self.pi = find_pi(self)
+        self.pi = find_pi(self.coprimes, len(self))
 
     # Magic methopds
     def __getitem__(self, item) -> Pair:
