@@ -2,8 +2,7 @@
 
 from read import read
 from random_numbers import random, initialise_random
-from math import gcd
-from math import sqrt
+from calculate import is_prime, is_coprime, find_pi
 
 from datetime import datetime
 
@@ -88,23 +87,16 @@ class Pair:
 
         self.pair = (self.a, self.b)
 
-        self.coprime = self.is_coprime()
-
-        self.primes = 0
+        self.coprime = is_coprime(self)
+        self.primes = sum([is_prime(self.a), is_prime(self.b)])
 
     def __str__(self) -> str:
-        return f'({self.a}, {self.b})'
+        return f'({self.a}, {self.b}):\tCoprime {self.coprime}, primes {self.primes}'
 
-    def __getitem__(self, i) -> int:
-        return self.pair[i]
+    def __getitem__(self, item) -> int:
+        return self.pair[item]
     
-    # Determines whether the pair is coprime.
-    #   A pair of numbers are coprime iff their greatest
-    #   common demoninator (gcd) is 1.
-    def is_coprime(self) -> 0 | 1:
-        return 1 if gcd(*self.pair) == 1 else 0
     
-
 
 # A list of pairs
 class PairList:
@@ -112,9 +104,9 @@ class PairList:
         self.pairs = [Pair(*pair) for pair in pairs]
 
         self.coprimes = self.count_coprimes()
-        self.primes = self.count_primes
+        self.primes = self.count_primes()
 
-        self.pi = self.find_pi()
+        self.pi = find_pi(self)
 
     # Magic methopds
     def __getitem__(self, item) -> Pair:
@@ -126,15 +118,10 @@ class PairList:
     def __str__(self) -> str:
         return ''.join([f'{pair}\n' for pair in self.pairs])
     
+
     # Functions to aggregate stats
     def count_coprimes(self) -> int:
         return sum([pair.coprime for pair in self.pairs])
     
     def count_primes(self) -> int:
         return sum([pair.primes for pair in self.pairs])
-    
-
-    # Use the method in `calculate.py`
-    # Finds π
-    def find_pi(self) -> float:
-        return sqrt(6 / (self.coprimes / len(self)))
