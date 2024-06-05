@@ -2,8 +2,9 @@
 # the humans did at generating pi.
 
 from random_numbers import random, initialise_random
-from numpy import array
+from numpy import array, histogram
 from dataset import PairList
+from math import floor
 
 
 # Generates lots of PairLists of random numbers to
@@ -44,3 +45,10 @@ class Distribution:
 
         # Converts the list to a numpy array        
         return array(distribution)
+
+    # Returns a histogram of the pi data    
+    def histogram(self) -> tuple:        
+        return histogram(self.distribution[:,0])
+
+        
+        
