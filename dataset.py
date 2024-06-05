@@ -123,6 +123,9 @@ class PairList:
     def __len__(self) -> int:
         return len(self.pairs)
     
+    def __str__(self) -> str:
+        return ''.join([f'{pair}\n' for pair in self.pairs])
+    
     # Functions to aggregate stats
     def count_coprimes(self) -> int:
         return sum([pair.coprime for pair in self.pairs])
