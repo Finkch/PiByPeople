@@ -6,7 +6,6 @@ from calculate import is_prime, is_coprime, find_pi
 
 from datetime import datetime
 
-
 # Holds everything
 class Dataset:
 
@@ -18,12 +17,11 @@ class Dataset:
         # Converts live_random to a list of Pairs
         self.live_random = PairList(self.live_random)
 
-
         # Extracts information for easy reference
         # Generators are because column splicing keeps one too many lists
-        self.pseudonyms  = [item[0] for item in self.metadata[:,:1]]
-        self.times       = [item[0] for item in self.metadata[:,1:2]]
-        self.acks        = [item[0] for item in self.metadata[:,2:]]
+        self.pseudonyms  = self.metadata[:,0]
+        self.times       = self.metadata[:,1]
+        self.acks        = self.metadata[:,2]
 
         # Gets the number of pairs
         self.length      = len(self.live_random)
