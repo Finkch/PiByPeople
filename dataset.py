@@ -5,6 +5,8 @@ from random_numbers import random, initialise_random
 from datetime import datetime
 from math import gcd
 
+from logger import logger
+
 class Dataset:
 
     def __init__(self, file_path: str) -> None:
@@ -83,7 +85,7 @@ class Pair:
         self.a = int(a)
         self.b = int(b)
 
-        self.pair = [self.a, self.b]
+        self.pair = (self.a, self.b)
 
         self.coprime = self.is_coprime()
 
