@@ -1,9 +1,9 @@
 # Contains the data set
 
 from read import read
-from numpy import array
 from random_numbers import random, initialise_random
 from datetime import datetime
+from math import gcd
 
 class Dataset:
 
@@ -11,6 +11,10 @@ class Dataset:
 
         # Gets the data from the file
         self.live_random, self.metadata = read(file_path)
+
+        # Converts live_random to a list of Pairs
+        self.live_random = [Pair(pair[0], pair[1]) for pair in self.live_random]
+
 
         # Extracts information for easy reference
         # Generators are because column splicing keeps one too many lists
@@ -22,8 +26,8 @@ class Dataset:
         self.pairs       = len(self.live_random)
 
         # Generates other pairs of numbers
-        self.semi_random = self.generate_semi_random()
-        self.true_random = self.generate_true_random()
+        self.generate_semi_random()
+        self.generate_true_random()
 
         # Count of pairs of coprime numbers
         self.coprimes   = 0
@@ -33,9 +37,9 @@ class Dataset:
 
     # Generates a list of semi-random numbers from the
     # metadate of each entry
-    def generate_semi_random(self) -> list[list[int, int]]:
+    def generate_semi_random(self):
 
-        semi_random = []        
+        self.semi_random = []        
 
         for i in range(self.pairs):
 
@@ -55,20 +59,42 @@ class Dataset:
             
             
             # semi_random will have the same dimensions as live_random
-            semi_random.append(array([int(a), int(b)]))
-        return array(semi_random)
+            self.semi_random.append(Pair(a, b))
         
 
     # Generates a list of 'true' (computer) random numbers
-    def generate_true_random(self) -> list[list[int, int]]:
+    def generate_true_random(self):
         
+        self.true_random = []
+
         # Sets the seed to some number
         initialise_random()
 
         # Calls random numbers to fill the array
         # true_random will have the same dimensions as live_random
-        return array([
-            array([
-                random(), random()
-            ]) for i in range(self.pairs)
-        ])
+        self.true_random = [Pair(random(), random()) for i in range(self.pairs)]
+
+
+
+
+# A pair of numbers
+class Pair:
+    def __init__(self, a: int, b: int) -> None:
+        self.a = int(a)
+        self.b = int(b)
+
+        self.pair = [self.a, self.b]
+
+        self.coprime = self.is_coprime()
+
+    def __str__(self):
+        return f'({self.a}, {self.b})'
+
+    def __getitem__(self, i):
+        return self.pair[i]
+    
+    # Determines whether the pair is coprime.
+    #   A pair of numbers are coprime iff their greatest
+    #   common demoninator (gcd) is 1.
+    def is_coprime(self) -> 0 | 1:
+        return 1 if gcd(*self.pair) == 1 else 0
