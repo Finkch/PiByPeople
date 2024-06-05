@@ -19,6 +19,8 @@ class Logger:
             for data in datas:
                 for line in data:
                     f.write(line)
+                    if '\n' not in line:
+                        f.write('\n')
                 f.write('\n\n-----------------\n\n\n')
 
     # Logs data is is passed, appending it to the file
