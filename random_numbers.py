@@ -3,9 +3,6 @@
 from random import seed, randint
 from math import pi
 
-# The initial seed
-initial_seed = pi
-
 
 # Constants to determine the range of integers for true random
 start_range = 1
@@ -14,7 +11,7 @@ end_range = int(1e100)
 
 
 # Sets the starting seed
-def initialise_random():
+def initialise_random(initial_seed: int | float = pi):
     seed(initial_seed)
 
 # Selects a random number
