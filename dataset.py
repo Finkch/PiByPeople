@@ -1,4 +1,4 @@
-# Contains the data set
+# Constructs to contain and aggregate data
 
 from read import read
 from random_numbers import random, initialise_random
@@ -6,8 +6,8 @@ from calculate import is_prime, is_coprime, find_pi
 
 from datetime import datetime
 
-from logger import logger
 
+# Holds everything
 class Dataset:
 
     def __init__(self, file_path: str) -> None:
