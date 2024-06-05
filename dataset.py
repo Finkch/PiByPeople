@@ -2,8 +2,10 @@
 
 from read import read
 from random_numbers import random, initialise_random
-from datetime import datetime
 from math import gcd
+from math import sqrt
+
+from datetime import datetime
 
 from logger import logger
 
@@ -15,7 +17,7 @@ class Dataset:
         self.live_random, self.metadata = read(file_path)
 
         # Converts live_random to a list of Pairs
-        self.live_random = [Pair(pair[0], pair[1]) for pair in self.live_random]
+        self.live_random = PairList(self.live_random)
 
 
         # Extracts information for easy reference
@@ -41,7 +43,7 @@ class Dataset:
     # metadate of each entry
     def generate_semi_random(self):
 
-        self.semi_random = []        
+        semi_random = []        
 
         for i in range(self.pairs):
 
@@ -61,7 +63,8 @@ class Dataset:
             
             
             # semi_random will have the same dimensions as live_random
-            self.semi_random.append(Pair(a, b))
+            semi_random.append((a, b))
+        self.semi_random = PairList(semi_random)
         
 
     # Generates a list of 'true' (computer) random numbers
@@ -74,9 +77,7 @@ class Dataset:
 
         # Calls random numbers to fill the array
         # true_random will have the same dimensions as live_random
-        self.true_random = [Pair(random(), random()) for i in range(self.pairs)]
-
-
+        self.true_random = PairList([(random(), random()) for i in range(self.pairs)])
 
 
 # A pair of numbers
@@ -89,10 +90,12 @@ class Pair:
 
         self.coprime = self.is_coprime()
 
-    def __str__(self):
+        self.primes = 0
+
+    def __str__(self) -> str:
         return f'({self.a}, {self.b})'
 
-    def __getitem__(self, i):
+    def __getitem__(self, i) -> int:
         return self.pair[i]
     
     # Determines whether the pair is coprime.
@@ -100,3 +103,35 @@ class Pair:
     #   common demoninator (gcd) is 1.
     def is_coprime(self) -> 0 | 1:
         return 1 if gcd(*self.pair) == 1 else 0
+    
+
+
+# A list of pairs
+class PairList:
+    def __init__(self, pairs: list[list[int, int]]) -> None:
+        self.pairs = [Pair(*pair) for pair in pairs]
+
+        self.coprimes = self.count_coprimes()
+        self.primes = self.count_primes
+
+        self.pi = self.find_pi()
+
+    # Magic methopds
+    def __getitem__(self, item) -> Pair:
+        return self.pairs[item]
+    
+    def __len__(self) -> int:
+        return len(self.pairs)
+    
+    # Functions to aggregate stats
+    def count_coprimes(self) -> int:
+        return sum([pair.coprime for pair in self.pairs])
+    
+    def count_primes(self) -> int:
+        return sum([pair.primes for pair in self.pairs])
+    
+
+    # Use the method in `calculate.py`
+    # Finds π
+    def find_pi(self) -> float:
+        return sqrt(6 / (self.coprimes / len(self)))
