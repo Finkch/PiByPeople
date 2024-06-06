@@ -61,29 +61,28 @@ class SmallDistribution:
 
         self.distribution = self.generate()
 
+    # Generates a bunch of distributions
     def generate(self):
-        initialise_random(None)
-        dist = []
 
+        # Sets the seed using system time
+        initialise_random(None)
+
+        dist = []
         for i in range(self.trials):
             
+            # Gets the data for a single distribution.
+            # We only care about the coprimes, for performance reasons
             coprimes = sum([
                 is_coprime(
-                    [random(end=1e5), random(end=1e5)]
+                    [random(end=1e5), random(end=1e5)] # Pairs of random numbers!
                 ) for j in range(self.length)
             ])
 
             dist.append(coprimes)
 
 
-
-        
+        # Calculates π
         pis = sqrt(6 / array(dist) * self.length)
-        
-        for i in range(self.trials):
-            logger.loga('copris', f'{i}:\t{dist[i]} --> {pis[i]}')
-
-        logger.loga('copris', '\n\n----------\n\n')
 
         return pis
     
