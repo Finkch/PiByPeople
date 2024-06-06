@@ -92,7 +92,7 @@ class RandomDistribution:
 
     # Generates the random distribution
     def generate(self) -> tuple[ndarray, ndarray]:
-        self.x, self.y = self.generator(self.trials, self.args)
+        self.x, self.y = self.generator(self.trials, *self.args)
 
         return self.x, self.y
 
@@ -112,7 +112,7 @@ class RandomDistribution:
         
         # Adds the Distribution
         self.dists[name] = {
-            'dist':     Distribution(function, params),
+            'dist':     Distribution(function, *params),
             'params':   params,
             'cov':      cov,
             'uncs':     uncs
