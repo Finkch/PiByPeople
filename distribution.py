@@ -12,6 +12,25 @@ from scipy.special import factorial
 from sympy import divisors
 
 # Generators
+def factors(nums: int, max_num: int):
+    initialise_random(None)
+
+    # Generates the requisite amount of random numbers
+    counts = {}
+    for i in range(nums):
+
+        # Gets the factors of a random number
+        divs = divisors(random(end = max_num))
+
+        # Counts the factors, like a histogram
+        for div in divs:
+            if div not in counts:
+                counts[div] = 0
+            counts[div] += 1
+    
+    # Return a list of the number versus its count
+    return array(list(counts.keys())), array(list(counts.values()))
+
 
 
 # Guess distributions
