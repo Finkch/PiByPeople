@@ -2,7 +2,7 @@
 # the humans did at generating pi.
 
 from random_numbers import random, initialise_random
-from numpy import array, histogram, sqrt
+from numpy import array, histogram, sqrt, pi, ndarray
 from dataset import PairList
 from calculate import is_coprime
 from logger import logger
@@ -87,8 +87,38 @@ class SmallDistribution:
 
         return pis
     
-    def histogram(self) -> tuple:
-        return histogram(self.distribution)
+    # Creates a numpy histogram of the distribution data
+    def histogram(self) -> tuple[ndarray]:
+
+        # Gets a bunch of reasonably sized bins
+        bins = [pi + i / 5 for i in range(-30, 30)]
+
+        # Grabs the histogram, trimming of excess zeroes
+        x, y = self.trim_histogram(*histogram(self.distribution, bins))
+
+        return x, y
+
+
+    # Removes excess zereos
+    def trim_histogram(x: ndarray, y: ndarray) -> tuple[ndarray]:
+        
+        # Finds the last leading zero
+        start = 0
+        for i in range(len(y)):
+            if y[i] != 0:
+                start = i
+                break
+        
+        # Finds the first trailing zero
+        stop = 0
+        for i in range(len(y) - 1, 0, -1):
+            if y[i] != 0:
+                stop = i + 1
+                break
+
+                
+        # Trims and returns the arrays
+        return x[start : stop], y[start : stop]
 
         
         
