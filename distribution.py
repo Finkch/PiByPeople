@@ -27,6 +27,10 @@ def factors(nums: int, max_num: int):
             if div not in counts:
                 counts[div] = 0
             counts[div] += 1
+
+
+    # Sorts the dictionry to be in ascending order of x (aka key)
+    counts = dict(sorted(counts.items()))
     
     # Return a list of the number versus its count
     return array(list(counts.keys())), array(list(counts.values()))
