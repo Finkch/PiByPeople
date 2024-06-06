@@ -16,15 +16,15 @@ def main():
 
     dataset = Dataset(f'data/{data_file}.csv')
 
-    distribution = SmallDistribution(1000, dataset.length, 1e3)
+    compare = SmallDistribution(1000, dataset.length * 1000)
 
     print_pi(dataset.live_random.pi)
     print_pi(dataset.semi_random.pi)
     print_pi(dataset.true_random.pi)
     print()
 
-    print(print_pi(average(distribution.distribution)))
-    plot_distribution(distribution)
+    print(print_pi(average(compare.distribution)))
+    plot_distribution(compare)
 
 
 
