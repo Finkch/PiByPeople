@@ -2,10 +2,13 @@
 # This is the main file. It get the ball rolling!
 
 from dataset import Dataset
-from distribution import Distribution
+from distribution import Distribution, SmallDistribution
 from show import print_pi, plot_distribution
 
 from numpy import average
+
+from logger import logger
+
 
 def main():
     
@@ -13,15 +16,16 @@ def main():
 
     dataset = Dataset(f'data/{data_file}.csv')
 
-    distribution = Distribution(100, dataset.length)
+    distribution = SmallDistribution(1000, dataset.length, 1e3)
 
     print_pi(dataset.live_random.pi)
     print_pi(dataset.semi_random.pi)
     print_pi(dataset.true_random.pi)
     print()
 
-    print(print_pi(average(distribution.distribution, 0)[0]))
+    print(print_pi(average(distribution.distribution)))
     plot_distribution(distribution)
+
 
 
 # Ensures only the startup thread runs main
