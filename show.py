@@ -5,7 +5,7 @@ import numpy as np
 from numpy import pi
 from statistics import stdev
 
-from distribution import SmallDistribution
+from distribution import SmallDistribution, RandomDistribution
 
 from logger import logger
 
@@ -70,6 +70,25 @@ def plot_distribution(distribution: SmallDistribution):
     # Compares to a perfect normal distribution
     plt.plot(nx, ny)
 
+    plt.show()
+
+
+# Plots a random distribution and the guesses underlying it
+def plot(dist: RandomDistribution):
+
+    # Gets the points for the random distribution
+    points = (dist.x, dist.y)
+    num_range = range(points[0][0], points[0][-1])
+
+    # Plots each guess distribution
+    for guess in dist.dists:
+        curve = dist.get_curve(guess, num_range)
+        plt.plot(*curve, label = guess)
+
+    # Displays
+    plt.scatter(*points)
+    plt.xscale('log')
+    plt.legend()
     plt.show()
 
 
