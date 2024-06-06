@@ -98,8 +98,9 @@ class SmallDistribution:
         return x, y
 
 
-    # Removes excess zereos
-    def trim_histogram(x: ndarray, y: ndarray) -> tuple[ndarray]:
+    # Removes excess zereos.
+    #   NOTE: the order is (y, x), the return order for np.histogram()
+    def trim_histogram(self, y: ndarray, x: ndarray) -> tuple[ndarray]:
         
         # Finds the last leading zero
         start = 0
@@ -114,6 +115,8 @@ class SmallDistribution:
             if y[i] != 0:
                 stop = i + 1
                 break
+
+        print(f'Slicing!:\t{start} : {stop}')
 
                 
         # Trims and returns the arrays
