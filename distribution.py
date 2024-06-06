@@ -3,9 +3,11 @@
 
 from random_numbers import random, initialise_random
 from numpy import array, histogram, sqrt, pi, ndarray
+import numpy as np
 from calculate import is_coprime
 from logger import logger
 from typing import Callable
+from scipy.optimize import curve_fit
 
 
 # Contains a distribution of data.
@@ -17,9 +19,13 @@ class Distribution:
 
     
     # Generates the curve associated with this function
-    def generate(self, num_range: range) -> tuple:
+    def generate(self, num_range: range, *args) -> tuple:
         self.x = array([point for point in num_range])
-        self.y = array([self.function(point, *self.args) for point in self.x])
+
+        if not args:
+            args = self.args
+
+        self.y = array([self.function(point, *args) for point in self.x])
 
         return self.x, self.y
 
@@ -31,19 +37,37 @@ class RandomDistribution:
         self.trials = trials
         self.args = args
 
-        self.functions  = []
-        self.names      = []
+        self.dists  = {}
 
-        self.fits = []
-        self.covs = []
-        self.uncs = []
+        self.generate()
 
     # Generates the distribution of
     def generate(self) -> tuple[ndarray, ndarray]:
         self.x, self.y = self.generator(self.trials, self.args)
 
         return self.x, self.y
-    
+
+    # Obtains the theoretical curve of a guess distribution    
+    def get_curve(self, name: str, num_range: range) -> tuple[ndarray, ndarray]:
+        return self.dists[name]['dist'].generate(num_range)
+
+
+    # Adds a guess of the underlying distribution
+    def guess(self, function: Callable, name: str, guesses: tuple | None = None) -> None:
+        
+        # Tries to fit the guess to the random distribution
+        params, cov = curve_fit(function, self.x, self.y, p0 = guesses)
+        
+        # Calculates the uncertainty of each variable
+        uncs = np.sqrt(np.diag(cov))
+        
+        # Adds the Distribution
+        self.dists[name] = {
+            'dist':     Distribution(function, params),
+            'params':   params,
+            'cov':      cov,
+            'uncs':     uncs
+        }
 
 
     
