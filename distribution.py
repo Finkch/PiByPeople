@@ -5,6 +5,7 @@ from numpy import array, sqrt, ndarray
 import numpy as np
 from typing import Callable
 from scipy.optimize import curve_fit
+from scipy.stats import percentileofscore
 from calculate import normalisation_factor
 
 
@@ -93,6 +94,24 @@ class RandomDistribution:
         else:
             self.y = np.multiply(self.y, normalisation_factor(self.x, self.y))
 
+    # Finds the percentile in which a value lies.
+    #   NOTE: this method only correctly if the (x, y) data
+    #   takes the form of a histogram. That is, the y data
+    #   consists of positive integers.
+    def percentile(self, value: float) -> float:
+        
+        # Adds "weights"
+        vals = []
+        for i in range(len(self.x)):
+            vals += [self.x[i] for j in range(self.y[i])]
+
+        # Returns the percentile
+        return percentileofscore(vals, value, kind = 'mean')
+    
+    # Find how close to the top a value lies in the percentile
+    def percent(self, value: float):
+        return abs(self.percentile(value) - 50) * 2
+        
 # A random distribution specifically for calculating pi.
 #   `generator` should be coprime, but that can't be enforce
 #   due to circular imports.
