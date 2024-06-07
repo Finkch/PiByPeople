@@ -5,7 +5,6 @@ from numpy import array, sqrt, ndarray
 import numpy as np
 from typing import Callable
 from scipy.optimize import curve_fit
-from scipy.special import factorial
 
 
 
@@ -95,20 +94,3 @@ class PiDistribution(RandomDistribution):
         # Calculates π
         self.pi = sqrt(6 / (self.y[0] / self.trials))
 
-
-    
-
-
-
-# Guess distributions
-def inverse(x, a, b, c):
-    return a / (x - c) + b
-
-def simple_inverse(x, a):
-    return a / x
-
-def poisson(x, l, a):
-    return a * ((l ** x) * (np.e ** -l)) / factorial(x)
-
-def inverse_log(x, a, b, c):
-    return a / np.log(x + b) + c
