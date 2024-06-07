@@ -1,6 +1,7 @@
 # Shows the results
 
 import matplotlib.pyplot as plt
+from matplotlib.colors import TABLEAU_COLORS
 from numpy import pi
 
 from distribution import RandomDistribution
@@ -51,13 +52,16 @@ def plot(dist: RandomDistribution, dataset: Dataset, num_range: list = None, tit
 
     # Gets the points for the random distribution
     points = (dist.x, dist.y)
+
+    # Gets a list of colours to use
+    colours = get_colours()
         
     # Plots the random distribution data
-    plot_scatter(points)
-    plot_guesses(dist, num_range)
+    plot_scatter(points, colours)
+    plot_guesses(dist, colours, num_range = num_range)
     
     # Adds the dataset data
-    plot_dataset(dataset)
+    plot_dataset(dataset, colours)
 
     # Finishing touches
     plot_titles(title, axes, is_log)
@@ -71,11 +75,11 @@ def plot(dist: RandomDistribution, dataset: Dataset, num_range: list = None, tit
 
 
 # Plots the distribution
-def plot_scatter(points: tuple) -> None:
-    plt.scatter(*points)
+def plot_scatter(points: tuple, colours: list[str]) -> None:
+    plt.scatter(*points, color = colours.pop(0))
 
 # Plots the theoretical distribution
-def plot_guesses(dist: RandomDistribution, num_range: list = None) -> None:
+def plot_guesses(dist: RandomDistribution, colours: list[str], num_range: list = None) -> None:
 
     # Grabs the dictionary of distributions for easy reference
     dists = dist.dists
@@ -93,11 +97,11 @@ def plot_guesses(dist: RandomDistribution, num_range: list = None) -> None:
         for i in range(len(dists[guess]['params'])):
             print(f'\t{dists[guess]["params"][i]} ± {dists[guess]["uncs"][i]}')
 
-        plt.plot(*curve, label = guess)
+        plt.plot(*curve, label = guess, color = colours.pop(0))
 
 # Puts a line where the human estimate of π lies
-def plot_dataset(dataset: Dataset) -> None:
-    plt.axvline(x = dataset.live_random.pi, label = f'Human $\pi$: {dataset.live_random.pi:.2f}')
+def plot_dataset(dataset: Dataset, colours: list[str]) -> None:
+    plt.axvline(x = dataset.live_random.pi, label = f'Human $\pi$: {dataset.live_random.pi:.2f}', color = colours.pop(0))
 
 # Add titles/labels, plus some extra settings
 def plot_titles(title: str = None, axes: tuple[str] = None, is_log: bool = False) -> None:
@@ -112,3 +116,8 @@ def plot_titles(title: str = None, axes: tuple[str] = None, is_log: bool = False
         plt.xscale('log')
 
     plt.legend()
+
+# A list of colours.
+#   Items are popped from the list to ensure no duplicates.
+def get_colours() -> list[str]:
+    return list(TABLEAU_COLORS.keys())
