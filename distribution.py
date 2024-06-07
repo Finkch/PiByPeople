@@ -82,9 +82,19 @@ class RandomDistribution:
         }
 
     # Normalises the y-values
-    def normalise(self):
-        total = sum(self.y)
-        self.y = np.divide(self.y, total)
+    def normalise(self, height: float = None):
+
+        # Sets the max height to one
+        self.y = np.divide(self.y, max(self.y))
+
+        # If height is specified, set the max height to it
+        if height:
+            self.y = np.multiply(self.y, height)
+
+        # Otherwise, normalise
+        else:
+            total = sum(self.y)
+            self.y = np.divide(self.y, total)
 
 # A random distribution specifically for calculating pi.
 #   `generator` should be coprime, but that can't be enforce
