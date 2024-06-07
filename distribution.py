@@ -52,6 +52,15 @@ def factors(nums: int, max_num: int) -> tuple[ndarray, ndarray]:
             divisors(random(end = max_nums))
     )
 
+# The distribution that is the common factors of n and m
+def common_factors(pairs: int, max_num: int) -> tuple[ndarray, ndarray]:
+    return generic_generator(
+        nums = pairs,
+        max_num = max_num, 
+        specific_generator = lambda max_num: 
+            cfs(random(end = max_num), random(end = max_num))
+    )
+
 
 # Guess distributions
 def inverse(x, a, b, c):
