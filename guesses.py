@@ -37,7 +37,10 @@ def log_nonormal(x, m, s, a):
     return a / x * np.e ** (-0.5 * (np.log(x - m) / s) ** 2)
 
 # Chi squared
-def chi_squared(x, k, a):
+def chi_squared(x, k):
+    return 1 / (2 ** (k / 2) * gammaf(k / 2)) * x ** (k / 2 - 1) * np.e ** (-x / 2)
+
+def nochi_squared(x, k, a):
     return a * x ** (k / 2 - 1) * np.e ** (-x / 2)
 
 # Gamma
