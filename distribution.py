@@ -166,6 +166,11 @@ class SmallDistribution:
         
         
 
+
+
+
+
+
 # Generators
 
 # Generic generator returns a histogram, given a specific generator.
@@ -250,6 +255,8 @@ def gcd_specific(max_num: int, n: int) -> dict[int]:
 
 # Distribution generators.
 #   In other words, distributions of distributions.
+
+# Returns a generator to create gcd_is_n distributions
 def dist_gcd_is_n(trials: int, max_num: int, length, n: int) -> tuple[ndarray, tuple]:
     return generic_generator(
         trials,
@@ -266,6 +273,19 @@ def dist_gcd_spcific(max_num: int, length: int, n: int) -> list:
             [random(end = max_num), random(end = max_num)]
         ) for j in range(length)
     ])]
+
+
+# Returns a generator to create gcd_is_n RandomDistributions
+def dist_dist_gcd_is_n(trials: int, max_num: int, length: int, n: int) -> tuple[ndarray, tuple]:
+    return generic_generator(
+        trials,
+        max_num,
+        lambda max_num, length, n:
+            RandomDistribution(gcd_is_n, length, max_num, n).y,
+        generic_counter,
+        length,
+        n
+    )
 
 
 # Guess distributions
