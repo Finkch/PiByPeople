@@ -11,7 +11,7 @@ from logger import logger
 
 
 # Returns `π ± unc` with some formatting
-def show_pi(guess_pi) -> str:
+def show_pi(guess_pi: float) -> str:
 
     # Finds the absolute error
     absolute_error = abs(pi - guess_pi)
@@ -29,7 +29,7 @@ def show_pi(guess_pi) -> str:
     return abs_pi, rel_pi
 
 # Prints out the strings
-def print_pi(guess_pi) -> None:
+def print_pi(guess_pi: float) -> None:
     abs_pi, rel_pi = show_pi(guess_pi)
     print(f'{abs_pi}\t\t{rel_pi}')
 
