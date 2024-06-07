@@ -8,6 +8,8 @@ from scipy.optimize import curve_fit
 from scipy.stats import percentileofscore
 from calculate import normalisation_factor
 
+from logger import logger
+
 
 
 # Contains a distribution of data.
@@ -98,6 +100,9 @@ class RandomDistribution:
     #   NOTE: this method only correctly if the (x, y) data
     #   takes the form of a histogram. That is, the y data
     #   consists of positive integers.
+    #
+    #   NOTE: This assumes the random distribution has
+    #   converged to the true distribution.
     def percentile(self, value: float) -> float:
         
         # Adds "weights"
@@ -109,9 +114,40 @@ class RandomDistribution:
         return percentileofscore(vals, value, kind = 'mean')
     
     # Find how close to the top a value lies in the percentile
+    #   NOTE: This assumes the random distribution has
+    #   converged to the true distribution.
     def top_percent(self, value: float):
         return abs(self.percentile(value) - 50) * 2
         
+    # Finds how close to the bottom relative to the mean a value is
+    #   NOTE: Unlike top_percent() and percentile(), this does not
+    #   assume the distribution has converged to the true distribution.
+    def bottom_percent(self, value: float, mean: float) -> float:
+        
+        # Gets the error of the value in question
+        value_error = abs(mean - value)
+
+        # Gets a sorted list of the absolute errors from the mean
+        errors = {abs(mean - self.x[i]): self.y[i] for i in range(len(self.x))}
+        errors = dict(sorted(errors.items(), reverse = True))
+
+        # Computes the score of the item
+        score = 0
+
+        # Iterates over all the items
+        for error in errors:
+
+            # Finds the position within the error
+            if value_error > error:
+                break
+
+            # Adds the weight in this bin of error
+            score += errors[error]
+
+        # Scales to [0, 100]
+        return 100 * score / self.trials
+
+
 # A random distribution specifically for calculating pi.
 #   `generator` should be coprime, but that can't be enforce
 #   due to circular imports.
