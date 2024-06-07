@@ -4,15 +4,16 @@
 from random_numbers import random, initialise_random
 from numpy import array, histogram, sqrt, pi, ndarray
 import numpy as np
-from calculate import is_coprime
+from calculate import is_coprime, cfs
 from logger import logger
 from typing import Callable
 from scipy.optimize import curve_fit
 from scipy.special import factorial
 from sympy import divisors
 
+
 # Generators
-def factors(nums: int, max_num: int):
+def factors(nums: int, max_num: int) -> tuple[ndarray, ndarray]:
     initialise_random(None)
 
     # Generates the requisite amount of random numbers
@@ -35,6 +36,31 @@ def factors(nums: int, max_num: int):
     # Return a list of the number versus its count
     return array(list(counts.keys())), array(list(counts.values()))
 
+def common_factors(pairs: int, max_num: int) -> tuple[ndarray, ndarray]:
+    initialise_random(None)
+
+    # Generates the requisite amount of random numbers
+    counts = {}
+    for i in range(pairs):
+
+        # Gets the common factors between a pair of random numbers
+        cf = cfs(random(end = max_num), random(end = max_num))
+
+        # Counts the factors, like a histogram
+        for factor in cf:
+            if factor not in counts:
+                counts[factor] = 0
+            counts[factor] += 1
+        
+    
+    # Sorts the dictionry to be in ascending order of x (aka key)
+    counts = dict(sorted(counts.items()))
+
+    for key in counts:
+        logger.loga('cfs', f'{key}:\t{counts[key]}')
+    
+    # Return a list of the number versus its count
+    return array(list(counts.keys())), array(list(counts.values()))
 
 
 # Guess distributions
