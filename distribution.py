@@ -195,7 +195,7 @@ def generic_generator(nums: int, max_num: int, specific_generator: Callable, *ar
     
     # Return a list of the number versus its count
     return array(list(counts.keys())), array(list(counts.values()))
-    
+
 
 # The distribution that is the factors of n
 def factors(nums: int, max_num: int) -> tuple[ndarray, ndarray]:
@@ -243,24 +243,6 @@ def gcd_specific(max_num: int, n: int) -> dict[int]:
 
 # Distribution generators.
 #   In other words, distributions of distributions.
-
-# Returns a generator to create gcd_is_n distributions
-def dist_gcd_is_n(trials: int, max_num: int, length, n: int) -> tuple[ndarray, tuple]:
-    return generic_generator(
-        trials,
-        max_num,
-        dist_gcd_spcific,
-        length,
-        n
-    )
-
-def dist_gcd_spcific(max_num: int, length: int, n: int) -> list:
-    return [sum([
-        is_coprime(
-            [random(end = max_num), random(end = max_num)]
-        ) for j in range(length)
-    ])]
-
 
 # Returns a generator to create gcd_is_n RandomDistributions
 def dist_dist_gcd_is_n(trials: int, max_num: int, length: int, n: int) -> tuple[ndarray, tuple]:

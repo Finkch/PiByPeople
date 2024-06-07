@@ -20,7 +20,8 @@ def test_gcd_is_n(trials):
         1e5
     ]
 
-    return args, [gcdisn_small, gcdisn_rd, gcdisn_distrd], ['Small Dist', 'Random Dist', 'Random Dist Dist'], False
+    #return args, [gcdisn_small, gcdisn_rd, gcdisn_distrd], ['Small Dist', 'Random Dist', 'Random Dist Dist'], False
+    return args, [gcdisn_small, gcdisn_distrd], ['Small Dist', 'Random Dist'], False
 
 
 '''     Distribution findings
@@ -61,8 +62,9 @@ SmallDistribution is the fastest and RD of RDs is the slowest.
 def gcdisn_small(trials, length, max_num):
     dist = SmallDistribution(trials, length, max_num)
 
-def gcdisn_rd(trials, length, max_num):
-    dist = RandomDistribution(dist_gcd_is_n, trials, max_num, length, 1)
+# Function removed
+# def gcdisn_rd(trials, length, max_num):
+#     dist = RandomDistribution(dist_gcd_is_n, trials, max_num, length, 1)
 
 def gcdisn_distrd(trials, length, max_num):
     dist = RandomDistribution(dist_dist_gcd_is_n, trials, max_num, length, 1)
