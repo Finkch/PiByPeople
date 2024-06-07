@@ -76,7 +76,7 @@ def plot(dist: RandomDistribution, dataset: Dataset, num_range: list = None, tit
 
 # Plots the distribution
 def plot_scatter(points: tuple, colours: list[str]) -> None:
-    plt.scatter(*points, color = colours.pop(0))
+    plt.scatter(*points, color = colours.pop(0), label = 'Random Distributions')
 
 # Plots the theoretical distribution
 def plot_guesses(dist: RandomDistribution, colours: list[str], num_range: list = None) -> None:
@@ -101,7 +101,7 @@ def plot_guesses(dist: RandomDistribution, colours: list[str], num_range: list =
 
 # Puts a line where the human estimate of π lies
 def plot_dataset(dataset: Dataset, colours: list[str]) -> None:
-    plt.axvline(x = dataset.live_random.pi, label = f'Human $\pi$: {dataset.live_random.pi:.2f}', color = colours.pop(0))
+    plt.axvline(x = dataset.live_random.pi, label = f'Human $\pi$: {dataset.live_random.pi:.2f}', color = colours.pop(0), linestyle = 'dashed', linewidth = 0.8)
 
 # Add titles/labels, plus some extra settings
 def plot_titles(title: str = None, axes: tuple[str] = None, is_log: bool = False) -> None:
