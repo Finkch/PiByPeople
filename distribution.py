@@ -83,6 +83,20 @@ class RandomDistribution:
             'uncs':     uncs
         }
 
+# A random distribution specifically for calculating pi
+class PiDistribution(RandomDistribution):
+    def __init__(self, trials: int, *args) -> None:
+        
+        # We want a coprime distribution to transform into a guess for π 
+        super().__init__(coprime, trials, *args)
+
+    # Generates a random distribution to guess at π
+    def generate(self) -> tuple[ndarray, ndarray]:
+        super().generate()
+
+        # Calculates π
+        self.pi = sqrt(6 / (self.y[0] / self.trials))
+
 
     
 # Runs much faster than regular distribution, but less useful.
@@ -233,6 +247,15 @@ def gcd_is_n(pairs: int, max_num: int, n: int) -> tuple[ndarray, ndarray]:
         n
     )
 
+# Gets the count of gcd's that equal to 1, e.i. they are coprime
+def coprime(pairs: int, max_num: int) -> tuple[ndarray, ndarray]:
+    return generic_generator(
+        pairs,
+        max_num,
+        lambda max_num: 
+            {1: 1} if gcd(random(end = max_num), random(end = max_num)) == 1 else {}
+    )
+
 # This is too complicated to fit into a lambda, to here's
 # the specific generator for gcd_is_n
 def gcd_specific(max_num: int, n: int) -> dict[int]:
@@ -254,6 +277,16 @@ def dist_dist_gcd_is_n(trials: int, max_num: int, length: int, n: int) -> tuple[
         length,
         n
     )
+
+def dist_pi(trials: int, max_num: int, length: int) -> tuple[ndarray, tuple]:
+    return generic_generator(
+        trials,
+        max_num,
+        lambda max_num, length:
+            [PiDistribution(length, max_num).pi],
+        length
+    )
+
 
 
 # Guess distributions
