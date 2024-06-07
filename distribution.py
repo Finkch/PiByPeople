@@ -2,10 +2,9 @@
 # the humans did at generating pi.
 
 from random_numbers import random, initialise_random
-from numpy import array, histogram, sqrt, pi, ndarray
+from numpy import array, sqrt, ndarray
 import numpy as np
-from calculate import is_coprime, cfs
-from logger import logger
+from calculate import cfs
 from typing import Callable
 from scipy.optimize import curve_fit
 from scipy.special import factorial
