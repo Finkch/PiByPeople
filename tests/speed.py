@@ -1,6 +1,7 @@
 # Compares several functions' performance
 
 from distribution import *
+from generators import *
 
 # This test is defunct
 # Distribution tests
