@@ -62,10 +62,13 @@ def plot_pi(dist: RandomDistribution, dataset: Dataset, score: str, num_range: l
     # Prints the normal distribution's estimate for π
     print_pi('Normal distribution\'s mean:\n\t', dist.dists['Normal']['params'][0])
     
-    if score <= 50:
-        print(f'The human estimate of π falls in the top {int(100 - score)}% of values!')
+    # Prints the percentile of how close to true π the human
+    # estimate falls. Do note that values at clamped to
+    # [1, 50] for clarirty.
+    if score > 50:
+        print(f'The human estimate of π falls in the top {max(int(100 - score), 1)}% of values!\n')
     else:
-        print(f'The human estimate of π falls in the bottom {int(score)}% of values!')
+        print(f'The human estimate of π falls in the bottom {max(int(score), 1)}% of values!\n')
 
     # Plots
     plot(dist, dataset, num_range, title, axes, is_log, save)
