@@ -78,7 +78,7 @@ def plot(dist: RandomDistribution):
 
     # Gets the points for the random distribution
     points = (dist.x, dist.y)
-    num_range = range(points[0][0], points[0][-1])
+    num_range = range(int(points[0][0]), int(points[0][-1]))
 
     # Plots each guess distribution
     for guess in dist.dists:
