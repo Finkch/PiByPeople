@@ -33,6 +33,16 @@ def is_prime(n: int) -> 0 | 1:
 
 
 
+# Finds the mean width of a set of bins
+def mean_width(x: ndarray) -> float:
+    return sum([x[i + 1] - x[i] for i in range(len(x) - 1)]) / (len(x) - 1)
+
+def normalisation_factor(x: ndarray, y: ndarray) -> float:
+    mw = mean_width(x)
+    return 1 / sum([mw * y[i] for i in range(len(y))])
+
+
+
 # The following code is taken from one of my repos: Common-Factors
 
 # Finds the common factors
