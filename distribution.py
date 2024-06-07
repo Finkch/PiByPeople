@@ -15,8 +15,7 @@ from sympy import divisors, gcd
 # Generators
 
 # Generic generator returns a histogram, given a specific generator.
-#   The specific generator must return a dictionary of the form:
-#   {num: occurances}
+#   The specific generator must return a list
 def generic_generator(nums: int, max_num: int, specific_generator: Callable, *args) -> tuple[ndarray, ndarray]:
     initialise_random(None)
 
@@ -67,9 +66,24 @@ def greatest_common_denominator(pairs: int, max_num: int) -> tuple[ndarray, ndar
         nums = pairs,
         max_num = max_num,
         specific_generator = lambda max_num:
-            {gcd(random(end = max_num), random(end = max_num)): 1}
+            [gcd(random(end = max_num), random(end = max_num))]
     )
 
+# Gets the count of gcd's that equal n
+def gcd_is_n(pairs: int, max_num: int, n: int) -> tuple[ndarray, ndarray]:
+    return generic_generator(
+        pairs,
+        max_num,
+        gcd_specific,
+        n
+    )
+
+# This is too complicated to fit into a lambda, to here's
+# the specific generator for gcd_is_n
+def gcd_specific(max_num: int, n: int) -> dict[int]:
+    a, b = random(end = max_num), random(end = max_num)
+    d = gcd(a, b)
+    return {d: 1} if d == n else {}
 
 
 # Guess distributions
