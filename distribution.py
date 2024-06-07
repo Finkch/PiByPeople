@@ -9,48 +9,29 @@ from logger import logger
 from typing import Callable
 from scipy.optimize import curve_fit
 from scipy.special import factorial
-from sympy import divisors
+from sympy import divisors, gcd
 
 
 # Generators
-def factors(nums: int, max_num: int) -> tuple[ndarray, ndarray]:
+
+# Generic generator returns a histogram, given a specific generator.
+#   The specific generator must return a dictionary of the form:
+#   {num: occurances}
+def generic_generator(nums: int, max_num: int, specific_generator: Callable) -> tuple[ndarray, ndarray]:
     initialise_random(None)
 
     # Generates the requisite amount of random numbers
     counts = {}
     for i in range(nums):
 
-        # Gets the factors of a random number
-        divs = divisors(random(end = max_num))
-
-        # Counts the factors, like a histogram
-        for div in divs:
-            if div not in counts:
-                counts[div] = 0
-            counts[div] += 1
-
-
-    # Sorts the dictionry to be in ascending order of x (aka key)
-    counts = dict(sorted(counts.items()))
-    
-    # Return a list of the number versus its count
-    return array(list(counts.keys())), array(list(counts.values()))
-
-def common_factors(pairs: int, max_num: int) -> tuple[ndarray, ndarray]:
-    initialise_random(None)
-
-    # Generates the requisite amount of random numbers
-    counts = {}
-    for i in range(pairs):
-
         # Gets the common factors between a pair of random numbers
-        cf = cfs(random(end = max_num), random(end = max_num))
+        gen = specific_generator(max_num)
 
         # Counts the factors, like a histogram
-        for factor in cf:
-            if factor not in counts:
-                counts[factor] = 0
-            counts[factor] += 1
+        for num in gen:
+            if num not in counts:
+                counts[num] = 0
+            counts[num] += 1
         
     
     # Sorts the dictionry to be in ascending order of x (aka key)
@@ -62,6 +43,14 @@ def common_factors(pairs: int, max_num: int) -> tuple[ndarray, ndarray]:
     # Return a list of the number versus its count
     return array(list(counts.keys())), array(list(counts.values()))
 
+# The distribution that is the factors of n
+def factors(nums: int, max_num: int) -> tuple[ndarray, ndarray]:
+    return generic_generator(
+        nums = nums,
+        max_num = max_num, 
+        specific_generator = lambda max_nums: 
+            divisors(random(end = max_nums))
+    )
 
 
 # Guess distributions
