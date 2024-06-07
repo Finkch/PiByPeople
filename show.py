@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from numpy import pi
 
 from distribution import RandomDistribution
+from dataset import Dataset
 
 
 
@@ -46,35 +47,48 @@ def find_rounding(error: float) -> int:
 
 
 # Plots a random distribution and the guesses underlying it
-def plot(dist: RandomDistribution, num_range: list = None):
+def plot(dist: RandomDistribution, dataset: Dataset, num_range: list = None, is_log: bool = False, save: bool = False):
 
     # Gets the points for the random distribution
     points = (dist.x, dist.y)
+        
+    # Plots the random distribution data
+    plot_scatter(points)
+    plot_guesses(dist, num_range)
+
+    # Finishing touches
+    plt.legend()
+    if is_log:
+        plt.xscale('log')
+
+    # Shows the graph
+    if not save:
+        plt.show()
+    else:
+        plt.savefig()
+
+
+# Plots the distribution
+def plot_scatter(points: tuple) -> None:
+    plt.scatter(*points)
+
+# Plots the theoretical distribution
+def plot_guesses(dist: RandomDistribution, num_range: list = None) -> None:
+
+    # Grabs the dictionary of distributions for easy reference
+    dists = dist.dists
 
     # Gets the range for the guessed curve
     if not num_range:
-        start, stop, steps = points[0][0], points[0][-1], 100
+        start, stop, steps = dist.x[0], dist.x[-1], 100
         num_range = [start + i / steps for i in range(int((stop - start) * steps))]
 
     # Plots each guess distribution
-    for guess in dist.dists:
+    for guess in dists:
         curve = dist.get_curve(guess, num_range)
         
         print(f'{guess}:')
-        for i in range(len(dist.dists[guess]['params'])):
-            print(f'\t{dist.dists[guess]["params"][i]} ± {dist.dists[guess]["uncs"][i]}')
+        for i in range(len(dists[guess]['params'])):
+            print(f'\t{dists[guess]["params"][i]} ± {dists[guess]["uncs"][i]}')
 
         plt.plot(*curve, label = guess)
-        
-
-    # Displays
-    plt.scatter(*points)
-    plt.xscale('log')
-    plt.legend()
-    plt.show()
-
-
-
-
-
-    
