@@ -61,6 +61,16 @@ def common_factors(pairs: int, max_num: int) -> tuple[ndarray, ndarray]:
             cfs(random(end = max_num), random(end = max_num))
     )
 
+# The distribution that is the greatest common denominator of n and m
+def greatest_common_denominator(pairs: int, max_num: int) -> tuple[ndarray, ndarray]:
+    return generic_generator(
+        nums = pairs,
+        max_num = max_num,
+        specific_generator = lambda max_num:
+            {gcd(random(end = max_num), random(end = max_num)): 1}
+    )
+
+
 
 # Guess distributions
 def inverse(x, a, b, c):
