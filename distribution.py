@@ -12,103 +12,6 @@ from scipy.special import factorial
 from sympy import divisors, gcd
 
 
-# Generators
-
-# Generic generator returns a histogram, given a specific generator.
-#   The specific generator must return a list
-def generic_generator(nums: int, max_num: int, specific_generator: Callable, specific_counter: Callable, *args) -> tuple[ndarray, ndarray]:
-    initialise_random(None)
-
-    # Generates the requisite amount of random numbers
-    counts = {}
-    for i in range(nums):
-
-        # Generates items
-        gen = specific_generator(max_num, *args)
-
-        # Counts the generated items
-        specific_counter(gen, counts)
-        
-    
-    # Sorts the dictionry to be in ascending order of x (aka key)
-    counts = dict(sorted(counts.items()))
-
-    for key in counts:
-        logger.loga('cfs', f'{key}:\t{counts[key]}')
-    
-    # Return a list of the number versus its count
-    return array(list(counts.keys())), array(list(counts.values()))
-
-# Counts items in generated like a histogram
-def generic_counter(generated: list | dict, counts: dict) -> None:
-    for num in generated:
-        if num not in counts:
-            counts[num] = 0
-        counts[num] += 1
-
-# The distribution that is the factors of n
-def factors(nums: int, max_num: int) -> tuple[ndarray, ndarray]:
-    return generic_generator(
-        nums = nums,
-        max_num = max_num, 
-        specific_generator = lambda max_nums: 
-            divisors(random(end = max_nums)),
-        specific_counter = generic_counter
-    )
-
-# The distribution that is the common factors of n and m
-def common_factors(pairs: int, max_num: int) -> tuple[ndarray, ndarray]:
-    return generic_generator(
-        nums = pairs,
-        max_num = max_num, 
-        specific_generator = lambda max_num: 
-            cfs(random(end = max_num), random(end = max_num)),
-        specific_counter = generic_counter
-    )
-
-# The distribution that is the greatest common denominator of n and m
-def greatest_common_denominator(pairs: int, max_num: int) -> tuple[ndarray, ndarray]:
-    return generic_generator(
-        nums = pairs,
-        max_num = max_num,
-        specific_generator = lambda max_num:
-            [gcd(random(end = max_num), random(end = max_num))],
-        specific_counter = generic_counter
-    )
-
-# Gets the count of gcd's that equal n
-def gcd_is_n(pairs: int, max_num: int, n: int) -> tuple[ndarray, ndarray]:
-    return generic_generator(
-        pairs,
-        max_num,
-        gcd_specific,
-        generic_counter,
-        n
-    )
-
-# This is too complicated to fit into a lambda, to here's
-# the specific generator for gcd_is_n
-def gcd_specific(max_num: int, n: int) -> dict[int]:
-    a, b = random(end = max_num), random(end = max_num)
-    d = gcd(a, b)
-    return {d: 1} if d == n else {}
-
-
-# Guess distributions
-def inverse(x, a, b, c):
-    return a / (x - c) + b
-
-def simple_inverse(x, a):
-    return a / x
-
-def poisson(x, l, a):
-    return a * ((l ** x) * (np.e ** -l)) / factorial(x)
-
-def inverse_log(x, a, b, c):
-    return a / np.log(x + b) + c
-
-
-
 
 # Contains a distribution of data.
 #   The function passed must return (y: float or similar) data given (x, *args).
@@ -256,11 +159,124 @@ class SmallDistribution:
                 stop = i + 1
                 break
 
-        print(f'Slicing!:\t{start} : {stop}')
-
                 
         # Trims and returns the arrays
         return x[start : stop], y[start : stop]
 
         
         
+
+# Generators
+
+# Generic generator returns a histogram, given a specific generator.
+#   The specific generator must return a list
+def generic_generator(nums: int, max_num: int, specific_generator: Callable, specific_counter: Callable, *args) -> tuple[ndarray, ndarray]:
+    initialise_random(None)
+
+    # Generates the requisite amount of random numbers
+    counts = {}
+    for i in range(nums):
+
+        # Generates items
+        gen = specific_generator(max_num, *args)
+
+        # Counts the generated items
+        specific_counter(gen, counts)
+        
+    
+    # Sorts the dictionry to be in ascending order of x (aka key)
+    counts = dict(sorted(counts.items()))
+
+    for key in counts:
+        logger.loga('cfs', f'{key}:\t{counts[key]}')
+    
+    # Return a list of the number versus its count
+    return array(list(counts.keys())), array(list(counts.values()))
+
+# Counts items in generated like a histogram
+def generic_counter(generated: list | dict, counts: dict) -> None:
+    for num in generated:
+        if num not in counts:
+            counts[num] = 0
+        counts[num] += 1
+
+# The distribution that is the factors of n
+def factors(nums: int, max_num: int) -> tuple[ndarray, ndarray]:
+    return generic_generator(
+        nums = nums,
+        max_num = max_num, 
+        specific_generator = lambda max_nums: 
+            divisors(random(end = max_nums)),
+        specific_counter = generic_counter
+    )
+
+# The distribution that is the common factors of n and m
+def common_factors(pairs: int, max_num: int) -> tuple[ndarray, ndarray]:
+    return generic_generator(
+        nums = pairs,
+        max_num = max_num, 
+        specific_generator = lambda max_num: 
+            cfs(random(end = max_num), random(end = max_num)),
+        specific_counter = generic_counter
+    )
+
+# The distribution that is the greatest common denominator of n and m
+def greatest_common_denominator(pairs: int, max_num: int) -> tuple[ndarray, ndarray]:
+    return generic_generator(
+        nums = pairs,
+        max_num = max_num,
+        specific_generator = lambda max_num:
+            [gcd(random(end = max_num), random(end = max_num))],
+        specific_counter = generic_counter
+    )
+
+# Gets the count of gcd's that equal n
+def gcd_is_n(pairs: int, max_num: int, n: int) -> tuple[ndarray, ndarray]:
+    return generic_generator(
+        pairs,
+        max_num,
+        gcd_specific,
+        generic_counter,
+        n
+    )
+
+# This is too complicated to fit into a lambda, to here's
+# the specific generator for gcd_is_n
+def gcd_specific(max_num: int, n: int) -> dict[int]:
+    a, b = random(end = max_num), random(end = max_num)
+    d = gcd(a, b)
+    return {d: 1} if d == n else {}
+
+
+# Distribution generators.
+#   In other words, distributions of distributions.
+def dist_gcd_is_n(trials: int, max_num: int, length, n: int) -> tuple[ndarray, tuple]:
+    return generic_generator(
+        trials,
+        max_num,
+        dist_gcd_spcific,
+        generic_counter,
+        length,
+        n
+    )
+
+def dist_gcd_spcific(max_num: int, length: int, n: int) -> list:
+    return [sum([
+        is_coprime(
+            [random(end = max_num), random(end = max_num)]
+        ) for j in range(length)
+    ])]
+
+
+# Guess distributions
+def inverse(x, a, b, c):
+    return a / (x - c) + b
+
+def simple_inverse(x, a):
+    return a / x
+
+def poisson(x, l, a):
+    return a * ((l ** x) * (np.e ** -l)) / factorial(x)
+
+def inverse_log(x, a, b, c):
+    return a / np.log(x + b) + c
