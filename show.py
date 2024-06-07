@@ -1,13 +1,10 @@
 # Shows the results
 
 import matplotlib.pyplot as plt
-import numpy as np
 from numpy import pi
-from statistics import stdev
 
 from distribution import RandomDistribution
 
-from logger import logger
 
 
 # Returns `π ± unc` with some formatting
