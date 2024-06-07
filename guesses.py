@@ -25,7 +25,7 @@ def normal(x, m, s):
     return (1  / s / np.sqrt(2 * np.pi)) * np.e ** (-0.5 * ((x - m) / s) ** 2)
 
 # A normal distribution, unnormalised
-def nonnormal(x, m, s, a):
+def nonormal(x, m, s, a):
     return a * np.e ** (-0.5 * ((x - m) / s) ** 2)
 
 # Log-normal
