@@ -19,3 +19,11 @@ def poisson(x, l, a):
 # An inverse logarithm
 def inverse_log(x, a, b, c):
     return a / np.log(x + b) + c
+
+# A normal distribution, unnormalised
+def nonnormal(x, m, s, a):
+    return (a / s / np.sqrt(2 * np.pi)) * np.e ** (-0.5 * ((x - m) / s) ** 2)
+
+# A normal distribution, normalised
+def normal(x, m, s):
+    return (1 / s / np.sqrt(2 * np.pi)) * np.e ** (-0.5 * ((x - m) / s) ** 2)
