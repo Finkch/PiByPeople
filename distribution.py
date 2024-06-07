@@ -81,6 +81,11 @@ class RandomDistribution:
             'uncs':     uncs
         }
 
+    # Normalises the y-values
+    def normalise(self):
+        total = sum(self.y)
+        self.y = np.divide(self.y, total)
+
 # A random distribution specifically for calculating pi.
 #   `generator` should be coprime, but that can't be enforce
 #   due to circular imports.
