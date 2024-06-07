@@ -47,7 +47,7 @@ def find_rounding(error: float) -> int:
 
 
 # Plots a random distribution and the guesses underlying it
-def plot(dist: RandomDistribution, dataset: Dataset, num_range: list = None, is_log: bool = False, save: bool = False):
+def plot(dist: RandomDistribution, dataset: Dataset, num_range: list = None, title: str = None, axes: tuple[str] = None, is_log: bool = False, save: bool = False):
 
     # Gets the points for the random distribution
     points = (dist.x, dist.y)
@@ -55,11 +55,13 @@ def plot(dist: RandomDistribution, dataset: Dataset, num_range: list = None, is_
     # Plots the random distribution data
     plot_scatter(points)
     plot_guesses(dist, num_range)
+    
+    # Adds the dataset data
+    plot_dataset(dataset)
 
     # Finishing touches
-    plt.legend()
-    if is_log:
-        plt.xscale('log')
+    plot_titles(title, axes, is_log)
+        
 
     # Shows the graph
     if not save:
@@ -92,3 +94,21 @@ def plot_guesses(dist: RandomDistribution, num_range: list = None) -> None:
             print(f'\t{dists[guess]["params"][i]} ± {dists[guess]["uncs"][i]}')
 
         plt.plot(*curve, label = guess)
+
+# Puts a line where the human estimate of π lies
+def plot_dataset(dataset: Dataset) -> None:
+    plt.axvline(x = dataset.live_random.pi, label = f'Human $\pi$: {dataset.live_random.pi:.2f}')
+
+# Add titles/labels, plus some extra settings
+def plot_titles(title: str = None, axes: tuple[str] = None, is_log: bool = False) -> None:
+    if title:
+        plt.title(title)
+    
+    if axes:
+        plt.xlabel(axes[0])
+        plt.ylabel(axes[1])
+    
+    if is_log:
+        plt.xscale('log')
+
+    plt.legend()
