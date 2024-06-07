@@ -1,7 +1,6 @@
 # Constructs to contain and aggregate data
 
 from read import read
-from random_numbers import random, initialise_random
 from calculate import is_prime, is_coprime, find_pi
 
 from datetime import datetime
@@ -28,7 +27,6 @@ class Dataset:
 
         # Generates other pairs of numbers
         self.generate_semi_random()
-        self.generate_true_random()
 
 
 
@@ -59,18 +57,6 @@ class Dataset:
             semi_random.append((a, b))
         self.semi_random = PairList(semi_random)
         
-
-    # Generates a list of 'true' (computer) random numbers
-    def generate_true_random(self):
-        
-        self.true_random = []
-
-        # Sets the seed to some number
-        initialise_random()
-
-        # Calls random numbers to fill the array
-        # true_random will have the same dimensions as live_random
-        self.true_random = PairList([(random(), random()) for i in range(self.length)])
 
 
 # A pair of numbers
