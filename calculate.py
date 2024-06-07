@@ -32,45 +32,6 @@ def is_prime(n: int) -> 0 | 1:
     return 1 if isprime(n) else 0
 
 
-# Returns a list of all common factors between two numbers.
-#   Implements an approach found on StackExchange.
-def cf(a: int, b: int) -> list[int]:
-    
-    # Finds the gcd of the two numbers
-    d = gcd(a, b)
-
-    # Gets all the prime factors in the gcd
-    pfs = factorint(d)
-
-    # Using...*ahem*, mixed-radix numbers, iterate through radices.
-    #   e.g.: let d = 50 => pfs = 1x2, 2x5
-    #   00: 1^0 * 5^0 = 1
-    #   01: 1^0 * 5^1 = 5
-    #   ... all other combination of range(1 + 1) and range(2 + 1)
-    #   12: 1^1 * 5^2 = 50
-    #
-    #   Since there are an arbitrary amount of pfs, iterate through
-    #   all combinations via recursion.
-    return cf_recursive(pfs, list(pfs.keys()), [])
-
-def cf_recursive(pfs: dict, keys: list, factors: list) -> list[int]:
-    
-    # Base case
-    if len(keys) == 0:
-        return 1
-    
-    # Takes an item out of the prime factors
-    factor = keys.pop()
-    radix = pfs.pop(factor)
-
-    # Gets a list of all items l
-    for i in range(radix + 1):
-        factors.append(
-            factor ** i * cf_recursive(pfs, keys, factors)
-        )
-
-
-
 
 # The following code is taken from one of my repos: Common-Factors
 
