@@ -18,13 +18,10 @@ class Distribution:
 
     
     # Generates the curve associated with this function
-    def generate(self, num_range: range | list, *args) -> tuple:
+    def generate(self, num_range: list, *args) -> tuple:
         
-        # Gets the x values
-        if isinstance(num_range, range):
-            self.x = [x for x in num_range]
-        else:
-            self.x = num_range
+        # Grabs the x values
+        self.x = num_range
 
         # Ensures the first hundred values are extra dense.
         # This way, it looks smoother
