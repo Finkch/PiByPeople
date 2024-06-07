@@ -7,6 +7,8 @@ from numpy import pi
 from distribution import RandomDistribution
 from dataset import Dataset
 
+from logger import logger
+
 
 
 # Returns `π ± unc` with some formatting
@@ -91,13 +93,18 @@ def plot_guesses(dist: RandomDistribution, colours: list[str], num_range: list =
 
     # Plots each guess distribution
     for guess in dists:
-        curve = dist.get_curve(guess, num_range)
-        
-        print(f'{guess}:')
-        for i in range(len(dists[guess]['params'])):
-            print(f'\t{dists[guess]["params"][i]} ± {dists[guess]["uncs"][i]}')
 
+        # Generates the points on the curve
+        curve = dist.get_curve(guess, num_range)
+
+        # Plots the curve
         plt.plot(*curve, label = guess, color = colours.pop(0))
+
+
+        # Logs data
+        logger.loga('\ndist params', f'{guess}:')
+        for i in range(len(dists[guess]['params'])):
+            logger.loga('dist params', f'\t{dists[guess]["params"][i]} ± {dists[guess]["uncs"][i]}')
 
 # Puts a line where the human estimate of π lies
 def plot_dataset(dataset: Dataset, colours: list[str]) -> None:
