@@ -67,22 +67,6 @@ def plot(dist: RandomDistribution):
     plt.show()
 
 
-# A normal distribution
-def normal(x: float, mean: float, sd: float) -> list[float]:
-    prefactor = 1 / sd / np.sqrt(2 * pi)
-    
-    return prefactor * np.e ** (-0.5 * ((x - mean) / sd) ** 2)
-
-# Returns a pair of lists that represent a normal distribution
-def produce_normal(mean: float, sd: float, step_size: float = 0.01):
-    x = np.arange(pi - 2 * sd, pi + 2 * sd, step_size)
-    y = normal(x, mean, sd)
-
-    return x, y
-
-def get_sd(x: list, mean: float):
-    return stdev(x, mean)
-
 
 
 
