@@ -13,7 +13,7 @@ from sympy import divisors
 
 
 # Generators
-def factors(nums: int, max_num: int) -> ndarray[ndarray, ndarray]:
+def factors(nums: int, max_num: int) -> tuple[ndarray, ndarray]:
     initialise_random(None)
 
     # Generates the requisite amount of random numbers
@@ -36,7 +36,7 @@ def factors(nums: int, max_num: int) -> ndarray[ndarray, ndarray]:
     # Return a list of the number versus its count
     return array(list(counts.keys())), array(list(counts.values()))
 
-def common_factors(pairs: int, max_num: int) -> ndarray[ndarray, ndarray]:
+def common_factors(pairs: int, max_num: int) -> tuple[ndarray, ndarray]:
     initialise_random(None)
 
     # Generates the requisite amount of random numbers
