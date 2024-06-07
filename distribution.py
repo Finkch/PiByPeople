@@ -17,15 +17,18 @@ class Distribution:
 
     
     # Generates the curve associated with this function
-    def generate(self, num_range: range, *args) -> tuple:
+    def generate(self, num_range: range | list, *args) -> tuple:
         
         # Gets the x values
-        self.x = [x for x in num_range]
+        if isinstance(num_range, range):
+            self.x = [x for x in num_range]
+        else:
+            self.x = num_range
 
         # Ensures the first hundred values are extra dense.
         # This way, it looks smoother
-        if len(self.x) > 100:
-            self.x = [i / 10 for i in range(self.x[0] * 10, self.x[100] * 10)] + self.x[100:]
+        if len(self.x) > 100 and self.x[90] > 50:
+            self.x = [i / 10 for i in range(int(self.x[0] * 10), int(self.x[100] * 10))] + self.x[100:]
 
         # If no args were supplied, use the args sent during initialisation
         if not args:
