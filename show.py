@@ -5,7 +5,7 @@ import numpy as np
 from numpy import pi
 from statistics import stdev
 
-from distribution import SmallDistribution, RandomDistribution
+from distribution import RandomDistribution
 
 from logger import logger
 
@@ -46,31 +46,6 @@ def find_rounding(error: float) -> int:
 
     return i + 1
 
-
-def plot_distribution(distribution: SmallDistribution):
-
-
-    sd = get_sd(distribution.distribution, pi)
-
-    # Produces a histogram from the random trials
-    x, y, bin_size = distribution.histogram()
-
-    nx, ny = produce_normal(pi, sd, bin_size / 10)
-
-    y = y / max(y) * max(ny)
-
-
-    bins = plt.bar(x, y, bin_size * 0.9)
-
-    logger.log('post trim', [str(datum) for datum in x] + ['\n\n'] + [str(datum) for datum in y] + ['\n\n'] + [str(sum(y))])
-
-
-    print(sd)
-
-    # Compares to a perfect normal distribution
-    plt.plot(nx, ny)
-
-    plt.show()
 
 
 # Plots a random distribution and the guesses underlying it
