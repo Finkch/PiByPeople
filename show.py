@@ -2,7 +2,7 @@
 
 import matplotlib.pyplot as plt
 from matplotlib.colors import TABLEAU_COLORS
-from numpy import pi
+from numpy import pi, average
 
 from distribution import RandomDistribution
 from dataset import Dataset
@@ -24,15 +24,15 @@ def show_pi(guess_pi: float) -> str:
     precision = find_rounding(absolute_error)
 
     # Formats
-    abs_pi = f'{guess_pi:.{precision}f} ± {absolute_error:.{precision}f}'
-    rel_pi = f'{guess_pi:.{precision}f} ({relative_error:.{precision - 2}f}%)'
+    guess_pi = f'{guess_pi:.{precision}f} ± {absolute_error:.{precision}f} ({relative_error:.{precision - 2}f}%)'
 
-    return abs_pi, rel_pi
+    return guess_pi
 
 # Prints out the strings
-def print_pi(guess_pi: float) -> None:
-    abs_pi, rel_pi = show_pi(guess_pi)
-    print(f'{abs_pi}\t\t{rel_pi}')
+def print_pi(preamble: str, guess_pi: float) -> None:
+    print(preamble, end = '')
+    guess_pi = show_pi(guess_pi)
+    print(f'{guess_pi}\n')
 
 
 # Find the pricision at which to round.
@@ -47,6 +47,18 @@ def find_rounding(error: float) -> int:
 
     return i + 1
 
+# Plots normally, but also does some extra for π
+def plot_pi(dist: RandomDistribution, dataset: Dataset, num_range: list = None, title: str = None, axes: tuple[str] = None, is_log: bool = False, save: bool = False):
+    # Prints the human estimate for π
+    print_pi('Human estimate:\n\t', dataset.live_random.pi)
+
+    # Prints the mean and median estimates for π
+    print_pi('Mean of random distributions:\n\t', average(dist.x, weights = dist.y))
+
+    # Prints the normal distribution's estimate for π
+    print_pi('Normal distribution:\n\t', dist.dists['Normal']['params'][0])
+    
+    plot(dist, dataset, num_range, title, axes, is_log, save)
 
 
 # Plots a random distribution and the guesses underlying it
@@ -102,7 +114,7 @@ def plot_guesses(dist: RandomDistribution, colours: list[str], num_range: list =
 
 
         # Logs data
-        logger.loga('\ndist params', f'{guess}:')
+        logger.loga('dist params', f'\n{guess}:')
         for i in range(len(dists[guess]['params'])):
             logger.loga('dist params', f'\t{dists[guess]["params"][i]} ± {dists[guess]["uncs"][i]}')
 
