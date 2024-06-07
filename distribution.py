@@ -109,7 +109,7 @@ class RandomDistribution:
         return percentileofscore(vals, value, kind = 'mean')
     
     # Find how close to the top a value lies in the percentile
-    def percent(self, value: float):
+    def top_percent(self, value: float):
         return abs(self.percentile(value) - 50) * 2
         
 # A random distribution specifically for calculating pi.
