@@ -17,7 +17,7 @@ from sympy import divisors, gcd
 # Generic generator returns a histogram, given a specific generator.
 #   The specific generator must return a dictionary of the form:
 #   {num: occurances}
-def generic_generator(nums: int, max_num: int, specific_generator: Callable) -> tuple[ndarray, ndarray]:
+def generic_generator(nums: int, max_num: int, specific_generator: Callable, *args) -> tuple[ndarray, ndarray]:
     initialise_random(None)
 
     # Generates the requisite amount of random numbers
@@ -25,7 +25,7 @@ def generic_generator(nums: int, max_num: int, specific_generator: Callable) -> 
     for i in range(nums):
 
         # Gets the common factors between a pair of random numbers
-        gen = specific_generator(max_num)
+        gen = specific_generator(max_num, *args)
 
         # Counts the factors, like a histogram
         for num in gen:
