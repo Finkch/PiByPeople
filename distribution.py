@@ -131,8 +131,6 @@ class SmallDistribution:
 
         y, x = histogram(self.distribution, bins)
 
-        logger.log('dist print', [str(datum) for datum in x] + ['\n\n'] + [str(datum) for datum in y])
-
         # Grabs the histogram, trimming of excess zeroes
         x, y = self.trim_histogram(y, x)
 
@@ -191,9 +189,6 @@ def generic_generator(nums: int, max_num: int, specific_generator: Callable, spe
     
     # Sorts the dictionry to be in ascending order of x (aka key)
     counts = dict(sorted(counts.items()))
-
-    for key in counts:
-        logger.loga('cfs', f'{key}:\t{counts[key]}')
     
     # Return a list of the number versus its count
     return array(list(counts.keys())), array(list(counts.values()))
