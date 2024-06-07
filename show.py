@@ -46,14 +46,15 @@ def find_rounding(error: float) -> int:
 
 
 # Plots a random distribution and the guesses underlying it
-def plot(dist: RandomDistribution, num_range: range | list = None):
+def plot(dist: RandomDistribution, num_range: list = None):
 
     # Gets the points for the random distribution
     points = (dist.x, dist.y)
 
     # Gets the range for the guessed curve
     if not num_range:
-        num_range = range(int(points[0][0]), int(points[0][-1]))
+        start, stop, steps = points[0][0], points[0][-1], 100
+        num_range = [start + i / steps for i in range(int((stop - start) * steps))]
 
     # Plots each guess distribution
     for guess in dist.dists:
