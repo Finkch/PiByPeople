@@ -22,7 +22,7 @@ def inverse_log(x, a, b, c):
 
 # A normal distribution, unnormalised
 def nonnormal(x, m, s, a):
-    return (a / s / np.sqrt(2 * np.pi)) * np.e ** (-0.5 * ((x - m) / s) ** 2)
+    return a * np.e ** (-0.5 * ((x - m) / s) ** 2)
 
 # A normal distribution, normalised
 def normal(x, m, s):
@@ -30,4 +30,4 @@ def normal(x, m, s):
 
 # A log-normal
 def log_normal(x, m, s, a):
-    return (a / x / s / np.sqrt(2 * np.pi)) * np.e ** (-0.5 * (np.log(x - m) / s) ** 2)
+    return a * np.e ** (-0.5 * (np.log(x - m) / s) ** 2)
