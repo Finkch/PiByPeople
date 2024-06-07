@@ -47,8 +47,12 @@ def find_rounding(error: float) -> int:
 
     return i + 1
 
+
+
+
 # Plots normally, but also does some extra for π
-def plot_pi(dist: RandomDistribution, dataset: Dataset, num_range: list = None, title: str = None, axes: tuple[str] = None, is_log: bool = False, save: bool = False):
+def plot_pi(dist: RandomDistribution, dataset: Dataset, score: str, num_range: list = None, title: str = None, axes: tuple[str] = None, is_log: bool = False, save: bool = False):
+
     # Prints the human estimate for π
     print_pi('Human estimate:\n\t', dataset.live_random.pi)
 
@@ -56,8 +60,14 @@ def plot_pi(dist: RandomDistribution, dataset: Dataset, num_range: list = None, 
     print_pi('Mean of random distributions:\n\t', average(dist.x, weights = dist.y))
 
     # Prints the normal distribution's estimate for π
-    print_pi('Normal distribution:\n\t', dist.dists['Normal']['params'][0])
+    print_pi('Normal distribution\'s mean:\n\t', dist.dists['Normal']['params'][0])
     
+    if score >= 50:
+        print(f'The human estimate of π falls in the top {int(score)}% of values!')
+    else:
+        print(f'The human estimate of π falls in the bottom {int(100 - score)}% of values!')
+
+    # Plots
     plot(dist, dataset, num_range, title, axes, is_log, save)
 
 
@@ -86,6 +96,7 @@ def plot(dist: RandomDistribution, dataset: Dataset, num_range: list = None, tit
         plt.show()
     else:
         plt.savefig()
+
 
 
 # Plots the distribution
