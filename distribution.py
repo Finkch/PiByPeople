@@ -5,6 +5,7 @@ from numpy import array, sqrt, ndarray
 import numpy as np
 from typing import Callable
 from scipy.optimize import curve_fit
+from calculate import normalisation_factor
 
 
 
@@ -93,8 +94,7 @@ class RandomDistribution:
 
         # Otherwise, normalise
         else:
-            total = sum(self.y)
-            self.y = np.divide(self.y, total)
+            self.y = np.multiply(self.y, normalisation_factor(self.x, self.y))
 
 # A random distribution specifically for calculating pi.
 #   `generator` should be coprime, but that can't be enforce
