@@ -20,6 +20,13 @@ def poisson(x, l, a):
 def inverse_log(x, a, b, c):
     return a / np.log(x + b) + c
 
+def simple_inverse_log(x, a):
+    return a / np.log(x)
+
+# Benford's law
+def benford(x, a, b, c):
+    return a * np.log10(1 + 1 / (x + b)) + c
+
 # A normal distribution, normalised
 def normal(x, m, s):
     return (1  / s / np.sqrt(2 * np.pi)) * np.e ** (-0.5 * ((x - m) / s) ** 2)
