@@ -4,16 +4,16 @@
 from distribution import *
 from generators import *
 from guesses import *
-from show import plot_pi
+from show import plot_pi, plot, display
 import numpy as np
 
-def PiByPeople():
+def piByPeople():
     
     # The file in which data is stored
     data_file = '2018'
 
     # Loads the dataset
-    piByPeople = PiDistribution(human_pi, None, data_file)
+    pi_by_people = PiDistribution(human_pi, None, data_file)
 
     # Number of trails
     trials = 1000
@@ -22,12 +22,12 @@ def PiByPeople():
     max_num = 1e9
 
     # Creates the distribution of π guesses
-    dist = RandomDistribution(dist_pi, trials, max_num, piByPeople.x[0])
+    dist = RandomDistribution(dist_pi, trials, max_num, pi_by_people.x[0])
 
     # Gets the percentile in which human π falls.
     #   This has to be called before normalisation.
     # score = dist.bottom_percent(dataset.live_random.pi, np.pi)
-    score = dist.bottom_percent(piByPeople.pi, np.pi)
+    score = dist.bottom_percent(pi_by_people.pi, np.pi)
 
     # Normalise the distribution
     dist.normalise() 
@@ -37,11 +37,42 @@ def PiByPeople():
     dist.guess(log_nonormal, 'Log-Normal', (2, 0.25, 2))
 
     # Shows the results
-    plot_pi(dist, piByPeople, score, title='$\pi$ by People', axes=('$\pi$', 'counts (normalised)'))
+    plot_pi(dist, pi_by_people, score, title='$\pi$ by People', axes=('$\pi$', 'counts (normalised)'))
 
+
+# For manually testing distributions
+def test_distributions():
+    
+    # Number of trials
+    trials = int(1e3)
+
+    # Maximum random number that can be generated
+    max_num = 1e30
+
+    # The distribution to test
+    dist = RandomDistribution(
+        greatest_common_denominator,
+        trials,
+        max_num
+    )
+
+    # Guesses for the distribution
+    dist.guess(pareto, 'Pareto\'s', (1, 3))
+
+
+    # Optional range to plot on
+    num_range = [i for i in range(1, max(dist.x))]
+
+    # Shows the distribution and the guesses
+    plot(dist, num_range = num_range, is_log = True)
+
+    display(save = False)
 
 
 
 # Ensures only the startup thread runs main
 if __name__ == '__main__':
-    PiByPeople()
+    
+    # piByPeople()
+
+    test_distributions()
