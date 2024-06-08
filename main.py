@@ -1,7 +1,6 @@
 # Welcome to PiByPeople!
 # This is the main file. It get the ball rolling!
 
-from dataset import Dataset
 from distribution import *
 from generators import *
 from guesses import *
