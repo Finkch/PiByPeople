@@ -27,6 +27,10 @@ def simple_inverse_log(x, a):
 def benford(x, a, b, c):
     return a * np.log10(1 + 1 / (x + b)) + c
 
+# Pareto's law
+def pareto(x, x_m, alpha):
+    return alpha * x_m ** alpha / (x ** (alpha - 1))
+
 # A normal distribution, normalised
 def normal(x, m, s):
     return (1  / s / np.sqrt(2 * np.pi)) * np.e ** (-0.5 * ((x - m) / s) ** 2)

@@ -26,10 +26,10 @@ class Distribution:
         # Grabs the x values
         self.x = num_range
 
-        # Ensures the first hundred values are extra dense.
+        # Ensures the first ten values are extra dense.
         # This way, it looks smoother
-        if len(self.x) > 100 and self.x[90] > 50:
-            self.x = [i / 10 for i in range(int(self.x[0] * 10), int(self.x[100] * 10))] + self.x[100:]
+        if len(self.x) > 10:
+            self.x = [i / 10 for i in range(int(self.x[0] * 10), int(self.x[10] * 10))] + self.x[10:]
 
         # If no args were supplied, use the args sent during initialisation
         if not args:

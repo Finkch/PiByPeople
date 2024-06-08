@@ -88,6 +88,7 @@ def common_factors(pairs: int, max_num: int) -> tuple[ndarray, ndarray]:
     )
 
 # The distribution that is the greatest common denominator of n and m
+#   It looks like this follows a Pareto distribution with alpha = 3.
 def greatest_common_denominator(pairs: int, max_num: int) -> tuple[ndarray, ndarray]:
     return generic_generator(
         nums = pairs,
