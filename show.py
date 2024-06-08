@@ -4,8 +4,7 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import TABLEAU_COLORS
 from numpy import pi, average
 
-from distribution import RandomDistribution
-from dataset import Dataset
+from distribution import RandomDistribution, PiDistribution
 
 from logger import logger
 
@@ -51,10 +50,10 @@ def find_rounding(error: float) -> int:
 
 
 # Plots normally, but also does some extra for π
-def plot_pi(dist: RandomDistribution, dataset: Dataset, score: str, num_range: list = None, title: str = None, axes: tuple[str] = None, is_log: bool = False, save: bool = False):
+def plot_pi(dist: RandomDistribution, piByPeople: PiDistribution, score: str, num_range: list = None, title: str = None, axes: tuple[str] = None, is_log: bool = False, save: bool = False):
 
     # Prints the human estimate for π
-    print_pi('Human estimate:\n\t', dataset.live_random.pi)
+    print_pi('Human estimate:\n\t', piByPeople.pi)
 
     # Prints the mean and median estimates for π
     print_pi('Mean of random distributions:\n\t', average(dist.x, weights = dist.y))
@@ -71,11 +70,11 @@ def plot_pi(dist: RandomDistribution, dataset: Dataset, score: str, num_range: l
         print(f'The human estimate of π falls in the bottom {max(int(score), 1)}% of values!\n')
 
     # Plots
-    plot(dist, dataset, num_range, title, axes, is_log, save)
+    plot(dist, piByPeople, num_range, title, axes, is_log, save)
 
 
 # Plots a random distribution and the guesses underlying it
-def plot(dist: RandomDistribution, dataset: Dataset, num_range: list = None, title: str = None, axes: tuple[str] = None, is_log: bool = False, save: bool = False):
+def plot(dist: RandomDistribution, piByPeople: PiDistribution, num_range: list = None, title: str = None, axes: tuple[str] = None, is_log: bool = False, save: bool = False):
 
     # Gets the points for the random distribution
     points = (dist.x, dist.y)
@@ -88,7 +87,7 @@ def plot(dist: RandomDistribution, dataset: Dataset, num_range: list = None, tit
     plot_guesses(dist, colours, num_range = num_range)
     
     # Adds the dataset data
-    plot_dataset(dataset, colours)
+    plot_dataset(piByPeople, colours)
 
     # Finishing touches
     plot_titles(title, axes, is_log)
@@ -133,8 +132,8 @@ def plot_guesses(dist: RandomDistribution, colours: list[str], num_range: list =
             logger.loga('dist params', f'\t{dists[guess]["params"][i]} ± {dists[guess]["uncs"][i]}')
 
 # Puts a line where the human estimate of π lies
-def plot_dataset(dataset: Dataset, colours: list[str]) -> None:
-    plt.axvline(x = dataset.live_random.pi, label = f'Human $\pi$: {dataset.live_random.pi:.2f}', color = colours.pop(0), linestyle = 'dashed', linewidth = 0.8)
+def plot_dataset(piByPeople: PiDistribution, colours: list[str]) -> None:
+    plt.axvline(x = piByPeople.pi, label = f'Human $\pi$: {piByPeople.pi:.2f}', color = colours.pop(0), linestyle = 'dashed', linewidth = 0.8)
 
 # Add titles/labels, plus some extra settings
 def plot_titles(title: str = None, axes: tuple[str] = None, is_log: bool = False) -> None:
