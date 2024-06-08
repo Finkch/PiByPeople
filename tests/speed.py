@@ -66,7 +66,7 @@ SmallDistribution is the fastest and RD of RDs is the slowest.
 
 # Function removed
 # def gcdisn_rd(trials, length, max_num):
-#     dist = RandomDistribution(dist_gcd_is_n, trials, max_num, length, 1)
+#     dist = RandomDistribution(dist_dist_gcd_is_n, trials, max_num, length, 1)
 
 def gcdisn_distrd(trials, length, max_num):
-    dist = RandomDistribution(dist_dist_gcd_is_n, trials, max_num, length, 1)
+    dist = RandomDistribution(dist_gcd_is_n, trials, max_num, length, 1)

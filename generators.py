@@ -128,7 +128,7 @@ def gcd_specific(max_num: int, n: int) -> dict[int]:
 #   In other words, distributions of distributions.
 
 # Returns a generator to create gcd_is_n RandomDistributions
-def dist_dist_gcd_is_n(trials: int, max_num: int, length: int, n: int) -> tuple[ndarray, tuple]:
+def dist_gcd_is_n(trials: int, max_num: int, length: int, n: int) -> tuple[ndarray, tuple]:
     return generic_generator(
         trials,
         max_num,
