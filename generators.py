@@ -1,7 +1,7 @@
 # Generators to generate sets of numbers for distributions
 
 from random_numbers import random, initialise_random
-from numpy import array, ndarray
+from numpy import array, ndarray, histogram
 from calculate import cfs, is_coprime
 from typing import Callable
 from sympy import divisors, gcd
@@ -32,6 +32,14 @@ def generic_generator(nums: int, max_num: int, specific_generator: Callable, *ar
     
     # Return a list of the number versus its count
     return array(list(counts.keys())), array(list(counts.values()))
+
+# Generates numpy histograms.
+# Works well when specific generators return high-precision numbers.
+#   NOTE: requires specific generator to return float- or int-like.
+def histogram_generator(nums: int, max_num: int, bins: int | list, specific_generator: Callable, *args) -> tuple[ndarray, ndarray]:
+    generated = [specific_generator(max_num, *args) for i in range(nums)]
+    y, x = histogram(generated, bins)
+    return array([(x[i] + x[i + 1]) / 2 for i in range(bins)]), y
 
 # File generator is a generic generator that returns an x value
 # that is the length of the file and a y that is from the specific.
@@ -138,6 +146,7 @@ def dist_gcd_is_n(trials: int, max_num: int, length: int, n: int) -> tuple[ndarr
         n
     )
 
+# Returns π distributions for coprime
 def dist_pi(trials: int, max_num: int, length: int) -> tuple[ndarray, tuple]:
     return generic_generator(
         trials,
@@ -146,3 +155,25 @@ def dist_pi(trials: int, max_num: int, length: int) -> tuple[ndarray, tuple]:
             [PiDistribution(coprime, length, max_num).pi],
         length
     )
+
+# Plots the distributions of best fit arguments
+def dist_arg(trials: int, max_num: int, bins: int | list, length: int, argi: int, generator: Callable, guess: Callable, guesses: tuple, *args):
+    return histogram_generator(
+        trials,
+        max_num,
+        bins,
+        dist_arg_specific,
+        length,
+        argi,
+        generator,
+        guess,
+        guesses,
+        *args
+    )
+
+# Fits a curve and returns the best fit parameter
+def dist_arg_specific(max_num: int, length: int, argi: int, generator: Callable, guess: Callable, guesses: tuple, *args):
+    dist = RandomDistribution(generator, length, max_num, *args)
+    dist.guess(guess, 'na', guesses)
+
+    return dist.dists['na']['params'][argi]
