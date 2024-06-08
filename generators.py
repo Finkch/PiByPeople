@@ -2,7 +2,7 @@
 
 from random_numbers import random, initialise_random
 from numpy import array, ndarray
-from calculate import cfs
+from calculate import cfs, is_coprime
 from typing import Callable
 from sympy import divisors, gcd
 from distribution import RandomDistribution, PiDistribution
@@ -33,9 +33,41 @@ def generic_generator(nums: int, max_num: int, specific_generator: Callable, *ar
     # Return a list of the number versus its count
     return array(list(counts.keys())), array(list(counts.values()))
 
+# File generator is a generic generator that returns an x value
+# that is the length of the file and a y that is from the specific.
+def file_generator(nums: None, file: str, deliminator: tuple, specific_generator: Callable, *args):
+
+    # Reads the file, 
+    data = []
+    with open(f'data/{file}.csv', 'r') as f:
+        for line in f:
+
+            # Gets each item
+            splits = line.split(*deliminator)
+
+            # Generates the data
+            data.append(specific_generator(splits, *args))
+
+
+    # Gets the length of the file read
+    if nums == None:
+        nums = len(data)
+    
+    return array([nums]), array([sum(data)])
 
 
 #   Specific generators
+
+# Reads CSV to check coprimes from human generated pairs
+def human_pi(pairs: int, file: str):
+    return file_generator(
+        None,
+        file,
+        (',', 2),
+        lambda splits:
+            is_coprime((int(splits[0]), int(splits[1])))
+    )
+
 
 # The distribution that is the factors of n
 def factors(nums: int, max_num: int) -> tuple[ndarray, ndarray]:
