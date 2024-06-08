@@ -70,11 +70,14 @@ def plot_pi(dist: RandomDistribution, piByPeople: PiDistribution, score: str, nu
         print(f'The human estimate of π falls in the bottom {max(int(score), 1)}% of values!\n')
 
     # Plots
-    plot(dist, piByPeople, num_range, title, axes, is_log, save)
+    colours = plot(dist, num_range, title, axes, is_log)
+    plot_dataset(piByPeople, colours)
+    display(save)
+    
 
 
 # Plots a random distribution and the guesses underlying it
-def plot(dist: RandomDistribution, piByPeople: PiDistribution, num_range: list = None, title: str = None, axes: tuple[str] = None, is_log: bool = False, save: bool = False):
+def plot(dist: RandomDistribution, num_range: list = None, title: str = None, axes: tuple[str] = None, is_log: bool = False):
 
     # Gets the points for the random distribution
     points = (dist.x, dist.y)
@@ -85,21 +88,11 @@ def plot(dist: RandomDistribution, piByPeople: PiDistribution, num_range: list =
     # Plots the random distribution data
     plot_scatter(points, colours)
     plot_guesses(dist, colours, num_range = num_range)
-    
-    # Adds the dataset data
-    plot_dataset(piByPeople, colours)
 
     # Finishing touches
     plot_titles(title, axes, is_log)
-        
 
-    # Shows the graph
-    if not save:
-        plt.show()
-    else:
-        plt.savefig()
-
-
+    return colours
 
 # Plots the distribution
 def plot_scatter(points: tuple, colours: list[str]) -> None:
@@ -153,3 +146,9 @@ def plot_titles(title: str = None, axes: tuple[str] = None, is_log: bool = False
 #   Items are popped from the list to ensure no duplicates.
 def get_colours() -> list[str]:
     return list(TABLEAU_COLORS.keys())
+
+def display(save: bool = False):
+    if not save:
+        plt.show()
+    else:
+        plt.savefig()
