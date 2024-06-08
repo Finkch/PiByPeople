@@ -161,6 +161,11 @@ class PiDistribution(RandomDistribution):
     def generate(self) -> tuple[ndarray, ndarray]:
         super().generate()
 
+        # Sets trials in case the trials is not known beforehand.
+        # Used when the generator reads from a file.
+        if self.trials == None:
+            self.trials = self.x[0]
+
         # Calculates π
         self.pi = sqrt(6 / (self.y[0] / self.trials))
 
