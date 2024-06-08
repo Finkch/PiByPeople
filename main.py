@@ -7,7 +7,7 @@ from guesses import *
 from show import plot_pi
 import numpy as np
 
-def main():
+def PiByPeople():
     
     # The file in which data is stored
     data_file = '2018'
@@ -44,4 +44,4 @@ def main():
 
 # Ensures only the startup thread runs main
 if __name__ == '__main__':
-    main()
+    PiByPeople()
