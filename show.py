@@ -50,10 +50,10 @@ def find_rounding(error: float) -> int:
 
 
 # Plots normally, but also does some extra for π
-def plot_pi(dist: RandomDistribution, piByPeople: PiDistribution, score: str, num_range: list = None, title: str = None, axes: tuple[str] = None, is_log: bool = False, save: bool = False):
+def plot_pi(dist: RandomDistribution, pi_by_people: PiDistribution, score: str, num_range: list = None, title: str = None, axes: tuple[str] = None, is_log: bool = False, save: bool = False):
 
     # Prints the human estimate for π
-    print_pi('Human estimate:\n\t', piByPeople.pi)
+    print_pi('Human estimate:\n\t', pi_by_people.pi)
 
     # Prints the mean and median estimates for π
     print_pi('Mean of random distributions:\n\t', average(dist.x, weights = dist.y))
@@ -71,7 +71,7 @@ def plot_pi(dist: RandomDistribution, piByPeople: PiDistribution, score: str, nu
 
     # Plots
     colours = plot(dist, num_range, title, axes, is_log)
-    plot_dataset(piByPeople, colours)
+    plot_dataset(pi_by_people, colours)
     display(save)
     
 
@@ -125,8 +125,8 @@ def plot_guesses(dist: RandomDistribution, colours: list[str], num_range: list =
             logger.loga('dist params', f'\t{dists[guess]["params"][i]} ± {dists[guess]["uncs"][i]}')
 
 # Puts a line where the human estimate of π lies
-def plot_dataset(piByPeople: PiDistribution, colours: list[str]) -> None:
-    plt.axvline(x = piByPeople.pi, label = f'Human $\pi$: {piByPeople.pi:.2f}', color = colours.pop(0), linestyle = 'dashed', linewidth = 0.8)
+def plot_dataset(pi_by_people: PiDistribution, colours: list[str]) -> None:
+    plt.axvline(x = pi_by_people.pi, label = f'Human $\pi$: {pi_by_people.pi:.2f}', color = colours.pop(0), linestyle = 'dashed', linewidth = 0.8)
 
 # Add titles/labels, plus some extra settings
 def plot_titles(title: str = None, axes: tuple[str] = None, is_log: bool = False) -> None:
