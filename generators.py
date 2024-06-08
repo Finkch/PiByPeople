@@ -155,3 +155,25 @@ def dist_pi(trials: int, max_num: int, length: int) -> tuple[ndarray, tuple]:
             [PiDistribution(coprime, length, max_num).pi],
         length
     )
+
+# Plots the distributions of best fit arguments
+def dist_arg(trials: int, max_num: int, bins: int | list, length: int, argi: int, generator: Callable, guess: Callable, guesses: tuple, *args):
+    return histogram_generator(
+        trials,
+        max_num,
+        bins,
+        dist_arg_specific,
+        length,
+        argi,
+        generator,
+        guess,
+        guesses,
+        *args
+    )
+
+# Fits a curve and returns the best fit parameter
+def dist_arg_specific(max_num: int, length: int, argi: int, generator: Callable, guess: Callable, guesses: tuple, *args):
+    dist = RandomDistribution(generator, length, max_num, *args)
+    dist.guess(guess, 'na', guesses)
+
+    return dist.dists['na']['params'][argi]
