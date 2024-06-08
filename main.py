@@ -14,7 +14,7 @@ def main():
     data_file = '2018'
 
     # Loads the dataset
-    dataset = Dataset(f'data/{data_file}.csv')
+    piByPeople = PiDistribution(human_pi, None, data_file)
 
     # Number of trails
     trials = 1000
@@ -23,12 +23,12 @@ def main():
     max_num = 1e9
 
     # Creates the distribution of π guesses
-    dist = RandomDistribution(dist_pi, trials, max_num, dataset.length)
+    dist = RandomDistribution(dist_pi, trials, max_num, piByPeople.x[0])
 
     # Gets the percentile in which human π falls.
     #   This has to be called before normalisation.
     # score = dist.bottom_percent(dataset.live_random.pi, np.pi)
-    score = dist.bottom_percent(dataset.live_random.pi, np.pi)
+    score = dist.bottom_percent(piByPeople.pi, np.pi)
 
     # Normalise the distribution
     dist.normalise() 
@@ -38,7 +38,7 @@ def main():
     dist.guess(log_nonormal, 'Log-Normal', (2, 0.25, 2))
 
     # Shows the results
-    plot_pi(dist, dataset, score, title='$\pi$ by People', axes=('$\pi$', 'counts (normalised)'))
+    plot_pi(dist, piByPeople, score, title='$\pi$ by People', axes=('$\pi$', 'counts (normalised)'))
 
 
 
