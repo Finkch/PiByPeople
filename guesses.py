@@ -60,3 +60,7 @@ def gamma(x, k, t):
 
 def nogamma(x, k, t, a):
     return a * x ** (k - 1) * np.e ** (-x / t)
+
+# Continuous variant of the binomial
+def binomial_continuous(k, n, p, a):
+    return a * gammaf(n + 1)  / (gammaf(k + 1) * gammaf(n - k + 1)) * p ** k * (1 - p) ** (n - k)
