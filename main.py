@@ -17,10 +17,10 @@ def piByPeople():
     pi_by_people = PiDistribution(human_pi, None, data_file)
 
     # Number of trails
-    trials = 1000
+    trials = int(1e4)
 
     # Maximum size of the random number
-    max_num = 1e9
+    max_num = int(1e9)
 
     # Creates the distribution of π guesses
     dist = RandomDistribution(dist_pi, trials, max_num, pi_by_people.x[0])
