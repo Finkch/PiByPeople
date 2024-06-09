@@ -8,10 +8,7 @@ class Logger:
 
 
     # Logs data it is passed, overwriting the file
-    def log(self, file, *datas):
-        
-        # Location of the logs directory
-        loc = 'logs'
+    def log(self, file, *datas, loc = 'logs'):
 
         # Writes the data to the file
         # The data is overwritten
@@ -24,10 +21,7 @@ class Logger:
                 f.write('\n\n-----------------\n\n\n')
 
     # Logs data is is passed, appending it to the file
-    def loga(self, file, datum, clear = True):
-        
-        # Location of the logs directory
-        loc = 'logs'
+    def loga(self, file, datum, clear = True, loc = 'logs'):
 
         # On first write, clear the file
         flag = 'a'
