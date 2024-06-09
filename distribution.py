@@ -150,15 +150,13 @@ class RandomDistribution:
     # Returns a list representing the range of numbers
     def range(self, steps: int = 1000) -> list[float]:
         
-        # Gets the minimum and maximum x values
+        # Gets the minimum and maximum x values, and the span between them
         mini, maxi = min(self.x), max(self.x)
-
-        # Gets the difference between the left and rightmost points
         diff = maxi - mini
 
         # Gives the range a bit of wiggle room
-        left = mini - diff / 5
-        right = maxi + diff / 5
+        left = mini - diff / 8
+        right = maxi + diff / 8
         diff = right - left
 
         # Calculates the step size needed to span the range
