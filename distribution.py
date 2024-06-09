@@ -156,6 +156,9 @@ class RandomDistribution:
 
         # Gives the range a bit of wiggle room
         left = mini - diff / 8
+        if mini == 1:   # Some distributions don't like less than 1
+            left = mini
+
         right = maxi + diff / 8
         diff = right - left
 
