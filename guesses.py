@@ -64,3 +64,13 @@ def nogamma(x, k, t, a):
 # Continuous variant of the binomial
 def binomial_continuous(k, n, p, a):
     return a * gammaf(n + 1)  / (gammaf(k + 1) * gammaf(n - k + 1)) * p ** k * (1 - p) ** (n - k)
+
+# Beta distribution
+def beta(x, a, b, c, d, e):
+    return e * simple_beta(c * x - d, a, b)
+
+def simple_beta(x, a, b):
+    return x ** (a - 1) * (1 - x) ** (b - 1) / betaf(a, b)
+
+def betaf(a, b):
+    return gammaf(a) * gammaf(b) / gammaf(a + b)
