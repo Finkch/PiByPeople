@@ -84,6 +84,10 @@ def plot(dist: RandomDistribution, num_range: list = None, title: str = None, ax
 
     # Gets a list of colours to use
     colours = get_colours()
+
+    # Gets the range on which to plot the guess curves
+    if not num_range:
+        num_range = dist.range()
         
     # Plots the random distribution data
     plot_scatter(points, colours)
@@ -103,11 +107,6 @@ def plot_guesses(dist: RandomDistribution, colours: list[str], num_range: list =
 
     # Grabs the dictionary of distributions for easy reference
     dists = dist.dists
-
-    # Gets the range for the guessed curve
-    if not num_range:
-        start, stop, steps = dist.x[0], dist.x[-1], 100
-        num_range = [start + i / steps for i in range(int((stop - start) * steps))]
 
     # Plots each guess distribution
     for guess in dists:
