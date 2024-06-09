@@ -42,7 +42,7 @@ def piByPeople():
 
 
 # For manually testing distributions
-def test_distributions():
+def testDistributions():
     
     # Number of trials
     trials = int(1e3)
@@ -71,4 +71,4 @@ if __name__ == '__main__':
     
     piByPeople()
 
-    # test_distributions()
+    # testDistributions()
