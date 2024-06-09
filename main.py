@@ -7,6 +7,7 @@ from guesses import *
 from show import plot_pi, plot, display
 import numpy as np
 
+# Finds what π is, through human generated values
 def piByPeople():
     
     # The file in which data is stored
@@ -26,7 +27,6 @@ def piByPeople():
 
     # Gets the percentile in which human π falls.
     #   This has to be called before normalisation.
-    # score = dist.bottom_percent(dataset.live_random.pi, np.pi)
     score = dist.bottom_percent(pi_by_people.pi, np.pi)
 
     # Normalise the distribution
@@ -35,6 +35,7 @@ def piByPeople():
     # Adds some guess curves for the underlying distribution
     dist.guess(normal, 'Normal', (np.pi, 0.25))
     dist.guess(log_nonormal, 'Log-Normal', (2, 0.25, 2))
+
 
     # Shows the results
     plot_pi(dist, pi_by_people, score, title='$\pi$ by People', axes=('$\pi$', 'counts (normalised)'))
@@ -47,7 +48,7 @@ def test_distributions():
     trials = int(1e3)
 
     # Maximum random number that can be generated
-    max_num = 1e30
+    max_num = 1e6
 
     # The distribution to test
     dist = RandomDistribution(
@@ -60,19 +61,14 @@ def test_distributions():
     dist.guess(pareto, 'Pareto\'s', (1, 3))
 
 
-    # Optional range to plot on
-    num_range = [i for i in range(1, max(dist.x))]
-
     # Shows the distribution and the guesses
-    plot(dist, num_range = num_range, is_log = True)
-
+    plot(dist, is_log = True)
     display(save = False)
-
 
 
 # Ensures only the startup thread runs main
 if __name__ == '__main__':
     
-    # piByPeople()
+    piByPeople()
 
-    test_distributions()
+    # test_distributions()
