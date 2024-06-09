@@ -119,9 +119,9 @@ def plot_guesses(dist: RandomDistribution, colours: list[str], num_range: list =
 
 
         # Logs data
-        logger.loga('dist params', f'\n{guess}:')
+        logger.loga('params', f'\n{guess}:')
         for i in range(len(dists[guess]['params'])):
-            logger.loga('dist params', f'\t{dists[guess]["params"][i]} ± {dists[guess]["uncs"][i]}')
+            logger.loga('params', f'\t{dists[guess]["params"][i]} ± {dists[guess]["uncs"][i]}')
 
 # Puts a line where the human estimate of π lies
 def plot_dataset(pi_by_people: PiDistribution, colours: list[str]) -> None:
