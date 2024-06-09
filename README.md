@@ -39,7 +39,7 @@ The format of the data files must be a csv file where the first two columns are 
 
 ### logs
 
-The `logs` directory contains txt file genereted by the `logger`, contained within `logger.py`. While this directory is mostly used to debugging information, it also contains the best-fit parameters for the guess curves in the `params.txt` file (see [`guesses.py`](guesses.py) for more on guess curves).
+The `logs` directory contains txt file genereted by the `logger`, contained within `logger.py`. While this directory is mostly used to debugging information, it also contains the best-fit parameters for the guess curves in the `params.txt` file (see [`guesses.py`](guesses.py) for more on guess curves) and data used for [automatic updates](Auto Updates) in `ci.txt`. `ci.txt` is only updated when `updateCI()` is manually called in [`main.py`](main.py).
 
 
 ### .github/workflows
@@ -49,13 +49,15 @@ The `.github/workflows` directory contains a single file: `autoupdate.yml`. This
 
 ### main.py
 
-The `main.py` file starts the program for human users. It has two possible execution paths, `piByPeople()` or `testDistributions()` (to select, comment/uncomment at the bottom of the file).
+The `main.py` file starts the program for human users. It has three possible execution paths, `piByPeople()`, `testDistributions()`, and `updateCI()` (to select, comment/uncomment at the bottom of the file).
 
 `piByPeople()` runs the experiment mentioned in the [introduction](Introduction). It calcualtes π from the pairs in the data file, creates *n* random distributions, and compares the random distributions to the human created one. Best-fit normal and log-normal curves are shown and the results are plotted.
 
 `testDistributions()` is for playing around with various distributions and guess curves (see [`guesses.py`](guesses.py) for more on guess curves). For example, the default setting is a random distribution is created from 1000 trials of the greatest common denominator (see [`generators.py`](generators.py)) between a pair of random numbers. The Pareto distribution is applied as a guess curve. The experimental data and the best-fit Pareto distribution are plotted.
 
-There are other files to start this program and they are used for [automatic updated](Auto Updates) of this `README.md` file. The other entry points are described at [TODO]
+`updateCI()` is used for [automatic updates](Auto Updates) to update the confidence interval of the *n* distributions to find π experimentally; this data is stored in [`logs/ci.txt`](logs). The *n* used here is greater than the *n* in `piByPeople()`, as this function does not need to run live.
+
+There are other files to start this program and they are used for [automatic updated](Auto Updates) of this `README.md` file. The other entry points are described in [update.py](update.py).
 
 
 ### distribution.py
@@ -109,7 +111,7 @@ The `calculate.py` file contains several mathematical functions that did not fit
 
 ### logger.py
 
-The `logger.py` file contains the `Logger` class and a global instance of the object (known as `logger`). This class is used to log data to files. The prinary use-case for the `logger` was for debugging but it also captures the best-fit parameters from guesses (see: [`guesses.py`](guesses.py)) and outputs data for [automatic updates](Auto Updates) of this here `README.md`.
+The `logger.py` file contains the `Logger` class and a global instance of the object (known as `logger`). This class is used to log data to files. The prinary use-case for the `logger` was for debugging but it also captures the best-fit parameters from guesses in `params.txt` (see: [`guesses.py`](guesses.py)) and outputs data in `ci.txt` for [automatic updates](Auto Updates) of this here `README.md`.
 
 
 ### performance.py
