@@ -8,8 +8,6 @@ from scipy.optimize import curve_fit
 from scipy.stats import percentileofscore
 from calculate import normalisation_factor
 
-from logger import logger
-
 
 
 # Contains a distribution of data.
