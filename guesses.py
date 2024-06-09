@@ -74,3 +74,10 @@ def simple_beta(x, a, b):
 
 def betaf(a, b):
     return gammaf(a) * gammaf(b) / gammaf(a + b)
+
+# Exponential distribution
+def exponential(x, l, a):
+    return a * simple_exponential(x, l)
+
+def simple_exponential(x, l):
+    return l * np.e ** (-l * x)
