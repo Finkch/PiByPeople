@@ -83,13 +83,13 @@ def printout(pi: float, score: str) -> None:
         punc = '!'
 
     # The string where π is presented
-    pistr = f'**π = {pif[1]:.{pif[4]}f}**, according to humans.\n . '
+    pistr = f'**π = {pif[1]:.{pif[4]}f}**, according to humans.  \n'
 
     # The string where π's errors are presented
-    errorstr = f'That\'s off by {pif[2]:.{pif[4]}}, or about {pif[3]:.{pif[4] - 2}f}%!\n  '
+    errorstr = f'That\'s off by {pif[2]:.{pif[4]}}, or about {pif[3]:.{pif[4] - 2}f}%!  \n'
 
     # The string where the score is presented
-    scorestr = f'This estimates falls within the bottom {score}% of estimates ({ok}){punc}\n  '
+    scorestr = f'This estimates falls within the bottom {score}% of estimates ({ok}){punc}  \n'
 
     # Prints out the existing README, substituting several lines
     with open(f'{RM}.md', 'r') as file:
