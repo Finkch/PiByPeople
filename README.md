@@ -1,6 +1,8 @@
 # PiByPeople
 
-`TODO: Insert π here`
+**π = NAN**, according to humans.
+That's off by NAN, or about NAN%!
+This estimates falls within the bottom NAN% of estimates (NAN)NAN
 
 ## Introduction
 
