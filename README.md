@@ -27,7 +27,7 @@ In this experiemnt, *n* equals 10 000 since that's a reasonable size for my comp
 
 This is intended to be a small project. While I do not want to crowd source my random numbers, I highly encourage others to toy around with this theorem to play with randomness in a fun context. The core concept makes for a great introductory assignment for an amateur coder. As for my list of human generated values, I want to very carefully elicit submissions from participants - by the simple act of asking for a random number, one influences the volunteer's output.
 
-If you want to try this experiment yourself, clone the repository. Then all you have to do is either overwrite the data file (`data/2018.csv`) or add your own data file and adjust the code to point at it ([`main.py`](main.py) in `piByPeople()`, change `2018` the the name of your file, excluding the extension). If you add your own data file, make sure it follows the same formatting, unless you want to rewrite `file_generator()` in [`generators.py`](generators.py); the formatting is a csv file where the first two columns contain the number pairs.
+If you want to try this experiment yourself, clone the repository. Then all you have to do is either overwrite the data file (`data/2018.csv`) or add your own data file and adjust the code to point at it ([`main.py`](#-main.py) in `piByPeople()`, change `2018` the the name of your file, excluding the extension). If you add your own data file, make sure it follows the same formatting, unless you want to rewrite `file_generator()` in [`generators.py`](generators.py); the formatting is a csv file where the first two columns contain the number pairs.
 
 
 ## Files and Directories
