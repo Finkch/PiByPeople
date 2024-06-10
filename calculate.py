@@ -23,12 +23,12 @@ def find_pi(coprimes, pairs) -> float:
 # Determines whether the pair is coprime.
 #   A pair of numbers are coprime iff their greatest
 #   common demoninator (gcd) is 1.
-def is_coprime(pair) -> 0 | 1:
+def is_coprime(pair) -> int:
     return 1 if gcd(*pair) == 1 else 0
 
 
 # Checks if a number is prime.
-def is_prime(n: int) -> 0 | 1:
+def is_prime(n: int) -> int:
     return 1 if isprime(n) else 0
 
 

@@ -36,7 +36,7 @@ def generic_generator(nums: int, max_num: int, specific_generator: Callable, *ar
 # Generates numpy histograms.
 # Works well when specific generators return high-precision numbers.
 #   NOTE: requires specific generator to return float- or int-like.
-def histogram_generator(nums: int, max_num: int, bins: int | list, specific_generator: Callable, *args) -> tuple[ndarray, ndarray]:
+def histogram_generator(nums: int, max_num: int, bins: list, specific_generator: Callable, *args) -> tuple[ndarray, ndarray]:
     generated = [specific_generator(max_num, *args) for i in range(nums)]
     y, x = histogram(generated, bins)
     return array([(x[i] + x[i + 1]) / 2 for i in range(bins)]), y
@@ -157,7 +157,7 @@ def dist_pi(trials: int, max_num: int, length: int) -> tuple[ndarray, tuple]:
     )
 
 # Plots the distributions of best fit arguments
-def dist_arg(trials: int, max_num: int, bins: int | list, length: int, argi: int, generator: Callable, guess: Callable, guesses: tuple, *args):
+def dist_arg(trials: int, max_num: int, bins: list, length: int, argi: int, generator: Callable, guess: Callable, guesses: tuple, *args):
     return histogram_generator(
         trials,
         max_num,

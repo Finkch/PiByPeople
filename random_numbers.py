@@ -11,7 +11,7 @@ end_range = int(1e100)
 
 
 # Sets the starting seed
-def initialise_random(initial_seed: int | float = pi):
+def initialise_random(initial_seed: float = pi):
     seed(initial_seed)
 
 # Selects a random number
