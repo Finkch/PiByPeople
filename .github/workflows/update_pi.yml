@@ -38,11 +38,12 @@ jobs:
         git fetch --all
         git pull origin
         git checkout data
-        python update.py > README.md
+        python update.py
         git add README.md
         git commit -m "Updated README.md with new π by people estimate"
-        git push
+        git push origin
         git checkout main
+        git fetch --all
         git pull origin
         git merge data
         git push origin
