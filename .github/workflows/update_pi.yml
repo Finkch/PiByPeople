@@ -1,0 +1,54 @@
+# Updates README.md whenever `data` branch recieves a push
+name: autoupdate
+
+# Runs the job whenever there is a push to `main`
+# Since this repo is so small, there is no need for branches thus `on pull`
+on:
+  push:
+    branches:
+      - data
+
+# Dispatches a job
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # Moves repo to the runner
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+
+    # Installs Python3.10
+    - name: Setups Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+
+    # Gets dependencies
+    - name: Installs necessary libraries
+      run: pip install numpy scipy sympy matplotlib
+
+    # Does the dance to update
+    - name: Update README
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        echo "> Config..."
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        echo "> Fetch..."
+        git fetch --all --unshallow
+        git pull origin
+        echo "> Checkout..."
+        git checkout data
+        echo "> update.py..."
+        python update.py
+        echo "> Commit..."
+        git add README.md
+        git commit -m "Updated README.md with new π by people estimate"
+        git push origin
+        git checkout main
+        echo "> Merge..."
+        git merge data
+        echo "> Push..."
+        git push origin
