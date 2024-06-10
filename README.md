@@ -1,10 +1,10 @@
 # PiByPeople
 
-**π = NAN**, according to humans.  
+**π = 2.97**, according to humans.  
 
-That's off by NAN, or about NAN%!  
+That's off by 0.17, or about 5%!  
 
-This estimates falls within the bottom NAN% of estimates (NAN)NAN  
+This estimates falls within the bottom 61.3% of estimates (okay).  
 
 
 ## Introduction
