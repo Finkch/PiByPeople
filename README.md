@@ -1,6 +1,6 @@
 # PiByPeople
 
-**π = NAN**, according to humans.  
+**π = 2.97**, according to humans.  
 
 That's off by 0.17, or about 5%!  
 
@@ -140,4 +140,3 @@ The `update.py` file is used to keek this `README.md` file [up to date](#auto-up
 
 ## Auto Updates
 
-This `README.md` file is automatically updated whenever the `data` branch on GitHub recieves a push. The `data` branch is used exclusively to update [dataset files](#data). Using GitHub Actions, a Python script is executed to first find the new human generated estiamted for π before using it to update this file. The YAML script to perform this auto update is contained in [`.github/workflows/autoupdate.yml`](#githubworkflows)
