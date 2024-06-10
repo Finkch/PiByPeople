@@ -1,6 +1,6 @@
 # PiByPeople
 
-**π = 2.97**, according to humans.  
+**π = NAN**, according to humans.  
 
 That's off by 0.17, or about 5%!  
 
