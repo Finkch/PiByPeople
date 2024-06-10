@@ -43,5 +43,6 @@ jobs:
         git commit -m "Updated README.md with new π by people estimate"
         git push
         git checkout main
+        git pull origin
         git merge data
         git push origin

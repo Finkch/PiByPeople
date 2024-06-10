@@ -92,18 +92,21 @@ def printout(pi: float, score: str) -> None:
     scorestr = f'This estimates falls within the bottom {score}% of estimates ({ok}){punc}  \n'
 
     # Prints out the existing README, substituting several lines
+    lines = []
     with open(f'{RM}.md', 'r') as file:
         for line in file:
             if '**π = ' in line:
-                print(pistr)
+                lines.append(pistr)
             elif 'That\'s off by ' in line:
-                print(errorstr)
+                lines.append(errorstr)
             elif 'This estimates falls within the bottom ' in line:
-                print(scorestr)
-            elif '\n' in line:
-                print(line, end = '')
+                lines.append(scorestr)
             else:
-                print(line)
+                lines.append(line)
+
+    # Now writes, clearing README
+    with open(f'{RM}.md', 'w') as file:
+        file.writelines(lines)
 
 
 if __name__ == '__main__':
