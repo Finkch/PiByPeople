@@ -4,7 +4,7 @@
 
 That's off by 0.17, or about 5%!  
 
-This estimates falls within the bottom 61.3% of estimates (okay).  
+This estimates falls within the bottom 76.9% of estimates (good)!  
 
 
 ## Introduction
