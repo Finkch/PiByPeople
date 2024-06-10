@@ -70,7 +70,7 @@ def testDistributions():
 # For updates the confidence interval for automatic updates
 def updateCI():
     
-    trials = int(1e6)
+    trials = int(1e4)
 
     # Gets human pi
     pi_by_people = PiDistribution(human_pi, None, '2018')
@@ -82,11 +82,15 @@ def updateCI():
         pi_by_people.x[0]   # Count of number pairs
     )
 
-    # Finds the percentile in which human π falls
-    score = dist.bottom_percent(pi_by_people.pi, np.pi)
+    # Fits a normal distribution to the data
+    dist.normalise() # Normalises so a normal fit is reasonable
+    dist.guess(normal, 'Normal', (np.pi, 0.25))
 
-    # Logs the score for future reference
-    logger.loga('ci', f'{score}')
+    # Grabs the standard deviation
+    sd = dist.dists['Normal']['params'][1]
+
+    # Logs the standard deviation
+    logger.loga('ci', f'{sd}')
 
 
 # Ensures only the startup thread runs main
