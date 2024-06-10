@@ -38,7 +38,6 @@ jobs:
         git fetch
         git pull origin
         git checkout data
-        git merge origin/main
         python update.py > README.md
         git add README.md
         git commit -m "Updated README.md with new π by people estimate"
