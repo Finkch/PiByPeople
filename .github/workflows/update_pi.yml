@@ -37,7 +37,7 @@ jobs:
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         echo "> Fetch..."
-        git fetch --all
+        git fetch --all --unshallow
         git pull origin
         echo "> Checkout..."
         git checkout data
@@ -49,6 +49,6 @@ jobs:
         git push origin
         git checkout main
         echo "> Merge..."
-        git merge data --allow-unrelated-histories
+        git merge data
         echo "> Push..."
         git push origin
