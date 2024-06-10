@@ -96,8 +96,8 @@ def updateCI():
 # Ensures only the startup thread runs main
 if __name__ == '__main__':
     
-    # piByPeople()
+    piByPeople()
 
     # testDistributions()
 
-    updateCI()
+    # updateCI()
