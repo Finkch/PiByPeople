@@ -64,7 +64,7 @@ class RandomDistribution:
 
 
     # Adds a guess of the underlying distribution
-    def guess(self, function: Callable, name: str, guesses: tuple | None = None) -> None:
+    def guess(self, function: Callable, name: str, guesses: tuple) -> None:
         
         # Tries to fit the guess to the random distribution
         params, cov = curve_fit(function, self.x, self.y, p0 = guesses)
