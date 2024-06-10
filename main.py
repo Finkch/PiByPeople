@@ -70,7 +70,7 @@ def testDistributions():
 # For updates the confidence interval for automatic updates
 def updateCI():
     
-    trials = int(1e4)
+    trials = int(1e6)
 
     # Gets human pi
     pi_by_people = PiDistribution(human_pi, None, '2018')
