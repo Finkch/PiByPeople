@@ -1,6 +1,6 @@
 # Ignore logging files
 logs/*
-!logs/ci
+!logs/ci.txt
 
 # VS Code stuff
 .vscode
