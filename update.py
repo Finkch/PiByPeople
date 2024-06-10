@@ -93,6 +93,7 @@ def printout(pi: float, score: str) -> None:
 
     # Prints out the existing README, substituting several lines
     lines = []
+    whitespace = 0
     with open(f'{RM}.md', 'r') as file:
         for line in file:
             if '**π = ' in line:
@@ -104,15 +105,21 @@ def printout(pi: float, score: str) -> None:
             else:
                 lines.append(line)
 
+            # Check if the line was whitespace
+            whitespace += 1
+            if not line.isspace():
+                whitespace = 0
+
+
     # Ensures the file always changes, to ensure the runner can commit
-    if len(lines) % 2 == 0:
-        lines.append('')
-    else:
-        lines = lines[:-1]
+    lines.append('\n')
+    if whitespace > 10:
+        lines = lines[:-5]
 
     # Now writes, clearing README
     with open(f'{RM}.md', 'w') as file:
         file.writelines(lines)
+
 
 
 
