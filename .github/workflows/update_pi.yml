@@ -35,7 +35,7 @@ jobs:
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git fetch --all
+        git fetch --all --unshallow
         git pull origin
         git checkout data
         python update.py
@@ -43,7 +43,5 @@ jobs:
         git commit -m "Updated README.md with new π by people estimate"
         git push origin
         git checkout main
-        git fetch --all
-        git pull origin
         git merge data
         git push origin
