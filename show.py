@@ -23,14 +23,14 @@ def show_pi(guess_pi: float) -> str:
     precision = find_rounding(absolute_error)
 
     # Formats
-    guess_pi = f'{guess_pi:.{precision}f} ± {absolute_error:.{precision}f} ({relative_error:.{precision - 2}f}%)'
+    pistr = f'{guess_pi:.{precision}f} ± {absolute_error:.{precision}f} ({relative_error:.{precision - 2}f}%)'
 
-    return guess_pi
+    return pistr, guess_pi, absolute_error, relative_error, precision
 
 # Prints out the strings
 def print_pi(preamble: str, guess_pi: float) -> None:
     print(preamble, end = '')
-    guess_pi = show_pi(guess_pi)
+    guess_pi = show_pi(guess_pi)[0]
     print(f'{guess_pi}\n')
 
 
