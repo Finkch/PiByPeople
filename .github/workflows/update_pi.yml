@@ -33,15 +33,22 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
+        echo "> Config..."
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        echo "> Fetch..."
         git fetch --all --unshallow
         git pull origin
+        echo "> Checkout..."
         git checkout data
+        echo "> update.py..."
         python update.py
+        echo "> Commit..."
         git add README.md
         git commit -m "Updated README.md with new π by people estimate"
         git push origin
         git checkout main
+        echo "> Merge..."
         git merge data
+        echo "> Push..."
         git push origin
