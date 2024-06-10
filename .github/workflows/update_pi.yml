@@ -26,7 +26,7 @@ jobs:
 
     # Gets dependencies
     - name: Installs necessary libraries
-      run: pip install numpy scipy
+      run: pip install numpy scipy sympy
 
     # Does the dance to update
     - name: Update README
