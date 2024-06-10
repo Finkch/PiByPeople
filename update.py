@@ -104,9 +104,16 @@ def printout(pi: float, score: str) -> None:
             else:
                 lines.append(line)
 
+    # Ensures the file always changes, to ensure the runner can commit
+    if len(lines) % 2 == 0:
+        lines.append('')
+    else:
+        lines = lines[:-1]
+
     # Now writes, clearing README
     with open(f'{RM}.md', 'w') as file:
         file.writelines(lines)
+
 
 
 if __name__ == '__main__':
